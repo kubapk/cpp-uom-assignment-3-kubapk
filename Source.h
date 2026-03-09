@@ -49,6 +49,9 @@ public:
     string get_date() const {return date;}
     double activity() const {return activity;}
     int identifier() const {return identifier;}
+
+    //Prototyping member functions
+    void print_source_data() const;
 };
 
 #endif //if source_h is already defined, everything between #ifndef and #endif is skipped

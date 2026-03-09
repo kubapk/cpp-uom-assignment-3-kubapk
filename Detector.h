@@ -23,7 +23,7 @@ class Detector
 {
 private:
     string type{}; //type of detector being used
-    bool status{}; //whether detector is on or off
+    bool status{}; //whether detector is on or off (true = on)
     size_t counts{}; //number of counts detected from source
 
 public:
@@ -46,6 +46,9 @@ public:
     string get_type() const {return type;}
     bool get_status() const {return status;}
     int get_counts() const {return counts;}
+
+    //Prototyping member functions
+    void print_detector_data() const;
 };
 
 #endif //if detector_h is already defined, everything between #ifndef and #endif is skipped
