@@ -17,6 +17,7 @@ Last updated on XXX XX Mar 2026
 #include<iostream>
 #include<string>
 #include<cmath>
+#include "Source.h"
 using std::string;
 
 class Detector
@@ -48,7 +49,7 @@ public:
     int get_counts() const {return counts;}
 
     //Prototyping member functions
-    void print_detector_data() const;
+    int detect_counts(const Source source_in) const;
 };
 
 #endif //if detector_h is already defined, everything between #ifndef and #endif is skipped

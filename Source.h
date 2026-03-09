@@ -47,8 +47,8 @@ public:
     //Getters
     string get_type() const {return type;}
     string get_date() const {return date;}
-    double activity() const {return activity;}
-    int identifier() const {return identifier;}
+    double get_activity() const {return activity;}
+    int get_identifier() const {return identifier;}
 
     //Prototyping member functions
     void print_source_data() const;
