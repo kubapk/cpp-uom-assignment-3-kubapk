@@ -51,4 +51,4 @@ public:
     int identifier() const {return identifier;}
 };
 
-#endif //if particle_h is already defined, everything between #ifndef and #endif is skipped
+#endif //if source_h is already defined, everything between #ifndef and #endif is skipped
