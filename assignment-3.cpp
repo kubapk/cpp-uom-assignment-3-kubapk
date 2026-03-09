@@ -1,6 +1,6 @@
 /*
 ________________TITLE_______________________
-PHYS30762 Assignment 3 - Practicing Classes
+PHYS30762 Assignment 3 - Practising Classes
 ____________________________________________
 This C++ script...
 
