@@ -1,1 +1,13 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/3gZ4A3AO)
+### Kuba Kane
+# PHYS30762 Assignment 3 - Practicing Classes
+
+### Compilation Guidlines
+The source file is `assignment-2.cpp`. This code was run on VSC on a Windows 11 device, using the compilation line `g++ assignment-2.cpp -o assignment-2.exe`.
+
+### Program Reasoning
+ - Point 1
+ - Point 2
+
+
+### Disclosure of Delegation to Generative AI
+TBC
