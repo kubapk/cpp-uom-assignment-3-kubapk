@@ -11,15 +11,15 @@ Last updated on XXX XX Mar 2026
 */
 
 //Include gaurd
-#ifndef SOURCE_H
-#define SOURCE_H
+#ifndef DETECTOR_H
+#define DETECTOR_H
 
 #include<iostream>
 #include<string>
 #include<cmath>
 using std::string;
 
-class Source
+class Detector
 {
 private:
     string type{}; //type of detector being used
@@ -27,7 +27,25 @@ private:
     size_t counts{}; //number of counts detected from source
 
 public:
-    //
+    //Default constructor
+    Detector() = default;
+
+    //Paramterised constructor
+    Detector(string type_in, bool status_in, size_t counts_in) : 
+    type{type_in}, status{status_in}, counts{counts_in} {}
+
+    //Destructor
+    ~Detector() {std::cout<<"Destroying detector"<<std::endl;}
+
+    //Setters
+    void set_type(const string type_in) {type = type_in;}
+    void set_status(const bool status_in) {status = status_in;}
+    void set_counts(const size_t counts_in) {counts = counts_in;}
+
+    //Getters
+    string get_type() const {return type;}
+    bool get_status() const {return status;}
+    int get_counts() const {return counts;}
 };
 
 #endif //if detector_h is already defined, everything between #ifndef and #endif is skipped

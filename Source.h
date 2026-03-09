@@ -32,7 +32,7 @@ public:
     Source() = default;
 
     //Paramterised constructor
-    Source(string type_in, strin date_in, double activity_in, int identifier_in) : 
+    Source(string type_in, string date_in, double activity_in, int identifier_in) : 
     type{type_in}, date{date_in}, activity{activity_in}, identifier{identifier_in} {}
 
     //Destructor
@@ -41,8 +41,8 @@ public:
     //Setters
     void set_type(const string type_in) {type = type_in;}
     void set_date(const string date_in) {date = date_in;}
-    void set_activity(const double activity) {activity = activity_in;}
-    void set_identifier(const int identifier) {identifier = identifier_in;}
+    void set_activity(const double activity_in) {activity = activity_in;}
+    void set_identifier(const int identifier_in) {identifier = identifier_in;}
 
     //Getters
     string get_type() const {return type;}
