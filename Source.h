@@ -48,19 +48,37 @@ public:
     //Setters
     void set_type(const string type_in) 
     {
-        if(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92")
+        if(!(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92"))
         {
-            type = type_in;
+            throw std::invalid_argument("Source type must be either Na-22, Cs-136, or Co-92.");
         }
-        else
-        {
-            std::cout<<"Error: Source type must be Na-22, Cs-136 or Co-92\n"<<std::endl;
-        }
+
+        type = type_in;
     
     }
     void set_date(const string date_in) {date_acquisition = date_in;}
-    void set_activity(const double activity_in) {activity = activity_in;}
-    void set_identifier(const int identifier_in) {identifier = identifier_in;}
+
+    void set_activity(const double activity_in)
+    {
+        if(activity_in < 0)
+        {
+            throw std::invalid_argument("Activity must be a positive number.");
+        }
+
+        activity = activity_in;
+    
+    }
+
+    void set_identifier(const int identifier_in)
+    {
+        if(identifier_in < 0)
+        {
+            throw std::invalid_argument("ID of source must be a positive number.");
+        }
+
+        identifier = identifier_in;
+    
+    }
 
     //Getters
     string get_type() const {return type;}

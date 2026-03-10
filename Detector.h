@@ -32,14 +32,29 @@ public:
     Detector() = default;
 
     //Paramterised constructor
-    Detector(string type_in, bool status_in, size_t counts_in) : 
-    type{type_in}, status{status_in}, counts{counts_in} {}
+    Detector(string type_in, bool status_in, size_t counts_in)
+    {
+        set_type(type_in);
+        set_status(status_in);
+        set_counts(counts_in);
+    }
+    //type{type_in}, status{status_in}, counts{counts_in} {}
 
     //Destructor
     ~Detector() {std::cout<<"Destroying detector"<<std::endl;}
 
     //Setters
-    void set_type(const string type_in) {type = type_in;}
+    void set_type(const string type_in)
+    {
+        if(!(type_in == "Scintillator" || type_in == "Geiger" || type_in == "Germanium detector"))
+        {
+            throw std::invalid_argument("Detector type must be either Scintillator, Geiger, or Germanium detector.");
+        }
+
+        type = type_in;
+    
+    }
+
     void set_status(const bool status_in) {status = status_in;}
     void set_counts(const size_t counts_in) {counts = counts_in;}
 

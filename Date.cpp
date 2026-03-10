@@ -20,7 +20,7 @@ Last updated on XXX XX Mar 2026
 bool Date::is_valid_past_date() const
 {
     //Check if month is valid
-    if(month < 1 || month > 12) {std::cout<<"Invalid month"<<std::endl; return false;}
+    if(month < 1 || month > 12) {return false;}
 
     //Check day is valid
     if(day < 1 || day > 31) {return false;}
