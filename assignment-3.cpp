@@ -37,7 +37,8 @@ int main()
         for(size_t i{}; i<sources.size(); i++)
         {
             sources[i].print_source_data();
-            std::cout<<"Number of counts from detector d1 = "<<d1.detect_counts(sources[i])<<std::endl;
+            int d1_counts{d1.detect_counts(sources[i])};
+            std::cout<<"Number of counts from detector d1 = "<<d1_counts<<std::endl;
         }
 
     }
