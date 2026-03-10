@@ -15,6 +15,9 @@ Last updated on XXX XX Mar 2026
 
 bool Date::is_valid_past_date() const
 {
+    //Check if year is valid
+    if(year < 1000 || year > 3000) {return false;}
+
     //Check if month is valid
     if(month < 1 || month > 12) {return false;}
 

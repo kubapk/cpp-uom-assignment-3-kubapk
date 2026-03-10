@@ -25,14 +25,14 @@ class Detector
 private:
     string type{}; //type of detector being used
     bool status{}; //whether detector is on or off (true = on)
-    size_t counts{}; //number of counts detected from source
+    int counts{}; //number of counts detected from source
 
 public:
     //Default constructor
     Detector() = default;
 
     //Paramterised constructor
-    Detector(string type_in, bool status_in, size_t counts_in)
+    Detector(string type_in, bool status_in, int counts_in)
     {
         set_type(type_in);
         set_status(status_in);
@@ -56,7 +56,16 @@ public:
     }
 
     void set_status(const bool status_in) {status = status_in;}
-    void set_counts(const size_t counts_in) {counts = counts_in;}
+
+    void set_counts(const int counts_in) 
+    {
+        if(counts_in < 0)
+        {
+            throw std::invalid_argument("Number of counts detected from source must be a positive integer.");
+        }
+
+        counts = counts_in;
+    }
 
     //Getters
     string get_type() const {return type;}

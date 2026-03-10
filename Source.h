@@ -61,7 +61,7 @@ public:
     {
         if(!date_in.is_valid_past_date())
         {
-            throw std::invalid_argument("Date is not valid.");
+            throw std::invalid_argument("Date is not valid. Ensure format is DD/MM/YYYY.");
         }
 
         date_acquisition = date_in;

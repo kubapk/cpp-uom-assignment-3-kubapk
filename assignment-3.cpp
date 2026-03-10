@@ -19,7 +19,7 @@ int main()
 {
     try
     {
-        Date date1(12, 31, 2003);
+        Date date1(12, 12, 03);
         Source s1("Na-22", date1, 24.5, 100);
         Detector d1("Scintillator", true, 50);
 
