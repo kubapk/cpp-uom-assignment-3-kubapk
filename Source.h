@@ -41,8 +41,6 @@ public:
         set_activity(activity_in);
         set_identifier(identifier_in);
     } 
-    
-    //type{type_in}, date_acquisition{date_in}, activity{activity_in}, identifier{identifier_in} {}
 
     //Destructor
     ~Source() {std::cout<<"Destroying source"<<std::endl;}
@@ -50,12 +48,14 @@ public:
     //Setters
     void set_type(const string type_in) 
     {
-        if(!(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92"))
+        if(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92")
         {
-            throw std::invalid_argument("Source type must be either Na-22, Cs-136, or Co-92.");
+            type = type_in;
         }
-
-        type = type_in;
+        else
+        {
+            std::cout<<"Error: Source type must be Na-22, Cs-136 or Co-92\n"<<std::endl;
+        }
     
     }
     void set_date(const string date_in) {date_acquisition = date_in;}
