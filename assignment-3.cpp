@@ -10,25 +10,36 @@ Last updated on XXX XX Mar 2026
 */
 
 #include<iostream>
-#include<string>
-#include<cmath>
+#include<vector>
 #include "Source.h"
 #include "Detector.h"
+using std::vector;
 
 int main()
 {
     try
     {
-        Date date1(12, 12, 03);
-        Source s1("Na-22", date1, 24.5, 100);
+        vector<Source> sources; //empty vector of "Source" objects
+
+        Date date1(8, 3, 2026);
+        Date date2(9, 3, 2026);
+        Date date3(10, 3, 2026);
+
+        //Add sources to vector
+        sources.push_back(Source("Na-22", date1, 24.5, 10001));
+        sources.push_back(Source("Cs-136", date2, 34.5, 10002));
+        sources.push_back(Source("Co-92", date3, 44.5, 10003));
+
+        //Define detector
         Detector d1("Scintillator", true, 50);
+        
+        //Print out source data and detector counts for all sources
+        for(size_t i{}; i<sources.size(); i++)
+        {
+            sources[i].print_source_data();
+            std::cout<<"Number of counts from detector d1 = "<<d1.detect_counts(sources[i])<<std::endl;
+        }
 
-        //Print out source data
-        s1.print_source_data();
-
-        //Print detector counts
-        int d1_counts{d1.detect_counts(s1)};
-        std::cout<<"Number of counts from detector d1 = "<<d1_counts<<std::endl;
     }
     catch(const std::exception& e)
     {
