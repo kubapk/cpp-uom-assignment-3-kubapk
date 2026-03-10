@@ -25,7 +25,7 @@ class Source
 {
 private:
     string type{}; //radioactive source element
-    Date date_acquisition{}; //date of source acquisition
+    string date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
 
@@ -34,8 +34,15 @@ public:
     Source() = default;
 
     //Paramterised constructor
-    Source(string type_in, Date date_in, double activity_in, int identifier_in) : 
-    type{type_in}, date_acquisition{date_in}, activity{activity_in}, identifier{identifier_in} {}
+    Source(string type_in, string date_in, double activity_in, int identifier_in)
+    {
+        set_type(type_in);
+        set_date(date_in);
+        set_activity(activity_in);
+        set_identifier(identifier_in);
+    } 
+    
+    //type{type_in}, date_acquisition{date_in}, activity{activity_in}, identifier{identifier_in} {}
 
     //Destructor
     ~Source() {std::cout<<"Destroying source"<<std::endl;}
@@ -43,7 +50,7 @@ public:
     //Setters
     void set_type(const string type_in) 
     {
-        if((type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92"))
+        if(!(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92"))
         {
             throw std::invalid_argument("Source type must be either Na-22, Cs-136, or Co-92.");
         }
@@ -51,13 +58,13 @@ public:
         type = type_in;
     
     }
-    void set_date(const Date date_in) {date_acquisition = date_in;}
+    void set_date(const string date_in) {date_acquisition = date_in;}
     void set_activity(const double activity_in) {activity = activity_in;}
     void set_identifier(const int identifier_in) {identifier = identifier_in;}
 
     //Getters
     string get_type() const {return type;}
-    Date get_date() const {return date_acquisition;}
+    string get_date() const {return date_acquisition;}
     double get_activity() const {return activity;}
     int get_identifier() const {return identifier;}
 

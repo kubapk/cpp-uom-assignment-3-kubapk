@@ -18,7 +18,16 @@ Last updated on XXX XX Mar 2026
 int main()
 {
     //Initiate 1 source and 1 detector
-    Source s1("Na-22", "09/03/2026", 24.5, 100);
+    Source s1{};
+    try
+    {
+        Source s1("Na-221", "12/11/2003", 24.5, 100);
+    }
+    catch(const std::invalid_argument& e)
+    {
+        std::cout<<e.what()<<std::endl;
+    }
+    //Source s1("Na-221", "12/11/2003", 24.5, 100);
     Detector d1("Scintillator", true, 50);
 
     //Print out source data
