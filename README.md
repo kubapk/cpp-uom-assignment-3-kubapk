@@ -20,3 +20,4 @@ TBC
 [1] https://www.mirion.com/discover/knowledge-hub/articles/education/gamma-ray-efficiency-calibration-lab-experiment
 [2] https://oncologymedicalphysics.com/detection-efficiency-and-dead-time/
 [3] https://stackoverflow.com/questions/57025341/how-to-understand-c11-random-number-generator
+[4] Geiger counting 2nd year lab script
