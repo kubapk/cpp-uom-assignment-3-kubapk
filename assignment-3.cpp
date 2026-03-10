@@ -19,7 +19,8 @@ int main()
 {
     try
     {
-        Source s1("Na-22", "12/11/2003", 24.5, 100);
+        Date date1(12, 31, 2003);
+        Source s1("Na-22", date1, 24.5, 100);
         Detector d1("Scintillator", true, 50);
 
         //Print out source data

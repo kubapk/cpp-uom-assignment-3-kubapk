@@ -10,10 +10,6 @@ Created on Mon 9 Mar 2026
 Last updated on XXX XX Mar 2026
 */
 
-//Include gaurd
-#ifndef DETECTOR_H
-#define DETECTOR_H
-
 #include<iostream>
 #include "Date.h"
 
@@ -43,4 +39,11 @@ bool Date::is_valid_past_date() const
     return true;
 }
 
-#endif
+
+std::ostream& operator<<(std::ostream &os, const Date &date)
+{
+    os <<date.day<<"/"<<date.month<<"/"<<date.year;
+
+    return os;
+}
+

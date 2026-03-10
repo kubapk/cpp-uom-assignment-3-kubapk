@@ -25,7 +25,7 @@ class Source
 {
 private:
     string type{}; //radioactive source element
-    string date_acquisition{}; //date of source acquisition
+    Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
 
@@ -34,7 +34,7 @@ public:
     Source() = default;
 
     //Paramterised constructor
-    Source(string type_in, string date_in, double activity_in, int identifier_in)
+    Source(string type_in, Date date_in, double activity_in, int identifier_in)
     {
         set_type(type_in);
         set_date(date_in);
@@ -56,7 +56,16 @@ public:
         type = type_in;
     
     }
-    void set_date(const string date_in) {date_acquisition = date_in;}
+
+    void set_date(const Date date_in)
+    {
+        if(!date_in.is_valid_past_date())
+        {
+            throw std::invalid_argument("Date is not valid.");
+        }
+
+        date_acquisition = date_in;
+    }
 
     void set_activity(const double activity_in)
     {
@@ -82,7 +91,7 @@ public:
 
     //Getters
     string get_type() const {return type;}
-    string get_date() const {return date_acquisition;}
+    Date get_date() const {return date_acquisition;}
     double get_activity() const {return activity;}
     int get_identifier() const {return identifier;}
 

@@ -11,8 +11,15 @@ Created on Mon 9 Mar 2026
 Last updated on XXX XX Mar 2026
 */
 
+//Include gaurd
+#ifndef DATE_H
+#define DATE_H
+
 class Date
 {
+//Friend functions
+friend std::ostream& operator<<(std::ostream &os, const Date &date);
+
 private:
     int day{};
     int month{};
@@ -45,3 +52,5 @@ public:
     bool is_valid_past_date() const;
 
 };
+
+#endif
