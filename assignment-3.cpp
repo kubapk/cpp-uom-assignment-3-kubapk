@@ -31,14 +31,14 @@ int main()
         sources.push_back(Source("Co-92", date3, 44.5, 10003));
 
         //Define detector
-        Detector d1("Scintillator", true, 50);
+        Detector d1("Scintillator", true, 0.1, 10);
         
         //Print out source data and detector counts for all sources
         for(size_t i{}; i<sources.size(); i++)
         {
             sources[i].print_source_data();
             int d1_counts{d1.detect_counts(sources[i])};
-            std::cout<<"Number of counts from detector d1 = "<<d1_counts<<std::endl;
+            std::cout<<"Number of counts from detector d1 = "<<d1_counts<<"\n"<<std::endl;
         }
 
     }
