@@ -3,7 +3,9 @@
 
 > [!IMPORTANT]
 > **Program summary**
+>
 > This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a Poisson distribution of the properties of the source.
+>
 > The classes defined in this program are:
 > - `Source`: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
 > - `Detector`: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
