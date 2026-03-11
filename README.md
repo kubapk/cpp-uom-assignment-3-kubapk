@@ -2,7 +2,7 @@
 # PHYS30762 Assignment 3 - Practising Classes
 
 > [!IMPORTANT]
-> #### Program summary
+> ### PROGRAM SUMMARY
 > This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a Poisson distribution of the properties of the source.
 >
 > The classes defined in this program are:
@@ -47,3 +47,7 @@ The following sources were used in the research for this assignment.
 [3] https://stackoverflow.com/questions/57025341/how-to-understand-c11-random-number-generator
 
 [4] "Geiger counting", University of Manchester 2nd year lab script
+
+[5] https://ionactive.co.uk/resource-hub/technical-guidance/radiation-safety-data-radioactive/ionactive-radioisotope-data-resource
+
+[6] https://en.wikipedia.org/wiki/Specific_activity
