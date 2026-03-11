@@ -2,12 +2,17 @@
 # PHYS30762 Assignment 3 - Practising Classes
 
 > [!IMPORTANT]
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class.
+> **Program summary**
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a Poisson distribution of the properties of the source.
+> The classes defined in this program are:
+> - `Source`: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
+> - `Detector`: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
+> - `Date`: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
 
 
 ## User Guidelines
 ### Compilation Guidelines
-The source file is `assignment-2.cpp`. This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 assignment-3.cpp Source.cpp Detector.cpp Date.cpp -o main.exe`. The program can then be run by calling the file `main.exe`
+The source file is `assignment-2.cpp`. This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 assignment-3.cpp Source.cpp Detector.cpp Date.cpp -o main.exe`. The program can then be run by calling the file `main.exe`.
 
 ### Class Guidelines
 This guidelines are intended for a user who wishes to build their own code using the classes in this project.
