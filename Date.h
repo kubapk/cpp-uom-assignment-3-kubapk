@@ -1,6 +1,6 @@
 /*
 ____________________________________________
-DATE INPUT VALIDATION CLASS
+DATE CLASS
 (Part of PHYS30762 Assignment 3)
 ____________________________________________
 This header file defines a class to check that a date object produces a valid

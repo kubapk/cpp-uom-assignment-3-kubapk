@@ -32,13 +32,16 @@ int main()
 
         //Define detector
         Detector d1("Scintillator", true, 0.1, 10);
+        std::cout<<"NEW DETECTOR CREATED"<<std::endl;
+        d1.print_detector_data();
+        std::cout<<"\nSOURCE DATA"<<std::endl;
         
         //Print out source data and detector counts for all sources
         for(size_t i{}; i<sources.size(); i++)
         {
             sources[i].print_source_data();
             int d1_counts{d1.detect_counts(sources[i])};
-            std::cout<<"Number of counts from detector d1 = "<<d1_counts<<"\n"<<std::endl;
+            std::cout<<"Number of counts from "<<d1.get_type()<<" detector = " <<d1_counts<<"\n"<<std::endl;
         }
 
     }

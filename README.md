@@ -1,6 +1,8 @@
 ### Kuba Kane
 # PHYS30762 Assignment 3 - Practising Classes
 
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class. 
+
 ## User Guidelines
 ### Compilation Guidelines
 The source file is `assignment-2.cpp`. This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 assignment-3.cpp Source.cpp Detector.cpp Date.cpp -o main.exe`. The program can then be run by calling the file `main.exe`
@@ -27,4 +29,4 @@ The following sources were used in the research for this assignment.
 
 [3] https://stackoverflow.com/questions/57025341/how-to-understand-c11-random-number-generator
 
-[4] Geiger counting 2nd year lab script
+[4] "Geiger counting", University of Manchester 2nd year lab script

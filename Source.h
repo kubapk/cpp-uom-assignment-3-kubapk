@@ -43,7 +43,7 @@ public:
     } 
 
     //Destructor
-    ~Source() {std::cout<<"Destroying source"<<std::endl;}
+    ~Source() = default;
 
     //Setters
     void set_type(const string type_in) 

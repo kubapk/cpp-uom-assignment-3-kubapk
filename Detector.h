@@ -42,7 +42,7 @@ public:
     }
 
     //Destructor
-    ~Detector() {std::cout<<"Destroying detector"<<std::endl;}
+    ~Detector() = default;
 
     //Setters
     void set_type(const string type_in)
@@ -86,6 +86,7 @@ public:
 
     //Prototyping member functions
     int detect_counts(const Source source_in) const;
+    void print_detector_data() const;
 };
 
 #endif //if detector_h is already defined, everything between #ifndef and #endif is skipped

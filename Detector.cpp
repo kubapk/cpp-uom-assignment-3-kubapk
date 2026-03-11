@@ -15,6 +15,8 @@ Last updated on XXX XX Mar 2026
 #include "Source.h"
 #include "Detector.h"
 
+
+//Member function to produce random detector counts
 int Detector::detect_counts(const Source source_input) const
 {
     if(!status) return 0; //if status is false (i.e. detector is off)
@@ -34,4 +36,12 @@ int Detector::detect_counts(const Source source_input) const
     //around that mean
 
     return dist(gen); //random number produced following Poisson distribution - fluctuations around mean
+}
+
+
+//Member function to print out detector data
+void Detector::print_detector_data() const
+{
+    std::cout<<"Detector: [type, status, efficiency, measurement time] = ["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
+    return;
 }

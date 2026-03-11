@@ -13,6 +13,8 @@ Last updated on XXX XX Mar 2026
 #include<iostream>
 #include "Date.h"
 
+
+//Member function to check date is valid
 bool Date::is_valid_past_date() const
 {
     //Check if year is valid
@@ -43,6 +45,7 @@ bool Date::is_valid_past_date() const
 }
 
 
+//Member function to print out date 
 std::ostream& operator<<(std::ostream &os, const Date &date)
 {
     os <<date.day<<"/"<<date.month<<"/"<<date.year;
