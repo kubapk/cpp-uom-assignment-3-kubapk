@@ -1,0 +1,9 @@
+DETECTORS
+Scintillator 0.1
+Geiger 0.2
+Germanium-detector 0.3
+
+SOURCES
+Na-22 24.5
+Cs-136 34.5
+Co-92 44.5
