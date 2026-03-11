@@ -18,6 +18,7 @@ Last updated on XXX XX Mar 2026
 #include<string>
 #include<cmath>
 #include <stdexcept> //to report errors
+#include <set> //to store a vector of unique numbers
 #include "Date.h"
 using std::string;
 
@@ -28,6 +29,7 @@ private:
     Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
+    static std::set<int> used_ids; //identifiers previously used
 
 public:
     //Default constructor
@@ -53,8 +55,7 @@ public:
             throw std::invalid_argument("Source type must be either Na-22, Cs-136, or Co-92.");
         }
 
-        type = type_in;
-    
+        type = type_in; 
     }
 
     void set_date(const Date date_in)
@@ -75,7 +76,6 @@ public:
         }
 
         activity = activity_in;
-    
     }
 
     void set_identifier(const int identifier_in)
@@ -84,9 +84,13 @@ public:
         {
             throw std::invalid_argument("ID of source must be a positive number.");
         }
+        if(used_ids.count(identifier_in) !=0) //returns 0 if idenifier_in appears 0 times in used_ids
+        {
+            throw std::invalid_argument("A source ID has been used twice.");
+        }
 
         identifier = identifier_in;
-    
+        used_ids.insert(identifier_in);
     }
 
     //Getters
@@ -94,6 +98,7 @@ public:
     Date get_date() const {return date_acquisition;}
     double get_activity() const {return activity;}
     int get_identifier() const {return identifier;}
+    static std::set<int> get_used_ids() {return used_ids;}
 
     //Prototyping member functions
     void print_source_data() const;

@@ -19,11 +19,18 @@ The source file is `assignment-2.cpp`. This code was run on VSC using a Windows 
 ### Class Guidelines
 This guidelines are intended for a user who wishes to build their own code using the classes in this project.
 Note that date format should follow the British format, DD/MM/YYYY.
+When creating your own sources or detectors, they must be ones which exist in the valid_sources or valid_detector files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources. If you wish to enable more types of sources or detectors, you must modify the valid_sources or valid_detectors files with additional rows specifying all of the relevant properties.
 
 ## Program Reasoning
 ### Data validation
  - Originally tried to use "if-else" statements in the `Source` class to print out an error message if the data inputted was invalid. However, the code continued to print out the source object properties, leaving the invalid property blank.
- - Tried to overcome this using...
+ - Tried to overcome this using `stdexcept` library, which enabled arguments to be raised, which could then be printed out using `.what()` in the main code. This enabled direct print outs to be avoided in the class scripts, but still meant the code continued to be printed out.
+ - This was finally overcome by putting the code under `try`, and printing out the error message defined in the class using `catch`. This meant code did not continue to execute if an error was picked up.
+
+ ### Unique source identifiers
+ - To ensure unique identifiers, the `set` library was used to store all identifiers created by the user in a vector, disallowing any 2 entries to be the same.
+ - `static` was also useful here, meaning if the code was re-run, the identifiers would be remembered and so duplicated idenifiers would produce an error.
+ - To ensure compilation worked, the set `used_ids` needed to be initialised (with no elements) in the `Source.cpp` file.
 
 
 ## Disclosure of Delegation to Generative AI

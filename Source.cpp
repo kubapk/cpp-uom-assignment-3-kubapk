@@ -18,3 +18,7 @@ void Source::print_source_data() const
     std::cout<<"Source: [type, date, activity, identifier] = ["<<type<<", "<<date_acquisition<<", "<<activity<<", "<<identifier<<"]"<<std::endl;
     return;
 }
+
+std::set<int> Source::used_ids; //empty set of used IDs created
+//otherwise used_ids is initialised in class but not declared outside of it
+//and so cannot be used for checking IDs

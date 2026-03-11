@@ -28,7 +28,7 @@ int main()
         //Add sources to vector
         sources.push_back(Source("Na-22", date1, 24.5, 10001));
         sources.push_back(Source("Cs-136", date2, 34.5, 10002));
-        sources.push_back(Source("Co-92", date3, 44.5, 10003));
+        sources.push_back(Source("Co-92", date3, 44.5, 10002));
 
         //Define detector
         Detector d1("Scintillator", true, 0.1, 10);
