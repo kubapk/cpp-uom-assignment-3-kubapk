@@ -1,9 +1,8 @@
 ### Kuba Kane
 # PHYS30762 Assignment 3 - Practising Classes
 
-<div style="background-color:#f0f0f0; padding:10px; border-radius:6px;">
-This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class. 
-</div>
+> [!NOTE]
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class. 
 
 
 ## User Guidelines
