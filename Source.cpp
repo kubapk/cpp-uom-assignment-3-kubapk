@@ -28,9 +28,9 @@ std::set<int> Source::used_ids; //empty set of used IDs created
 std::map<string, double> Source::valid_sources;
 //empty map called "valid_sources" is created
 
-void Source::load_valid_sources(const string file_name)
+void Source::load_valid_sources(const string source_file_name)
 {
-    std::ifstream read_file(file_name);
+    std::ifstream read_file(source_file_name);
 
     string source_type;
     double source_activity;
@@ -40,6 +40,6 @@ void Source::load_valid_sources(const string file_name)
     //2nd thing read_file reads is then sent to source_activity
     {
         valid_sources[source_type] = source_activity;
-        //sets source_type to be index and source_activity to be value
+        //sets source_type to be key and source_activity to be value
     }
 }

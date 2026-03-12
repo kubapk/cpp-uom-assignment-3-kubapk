@@ -19,9 +19,12 @@ int main()
 {
     try
     {
+        //Load in the files with valid sources & detectors into the maps
         Source::load_valid_sources("valid_sources.txt");
-        //specify file to check sources from
-        vector<Source> sources; //empty vector of "Source" objects
+        Detector::load_valid_detectors("valid_detectors.txt");
+
+        //Create empty vector of "Source" objects
+        vector<Source> sources; 
 
         Date date1(8, 3, 2026);
         Date date2(9, 3, 2026);
@@ -29,7 +32,7 @@ int main()
 
         //Add sources to vector
         sources.push_back(Source("Na-22", date1, 2.31e17, 10003, 1e-4));
-        sources.push_back(Source("Cs-136", date2, 3.2e15, 10002, 1));
+        sources.push_back(Source("Cs-136", date2, 3.2e15, 10002, 1e-4));
         sources.push_back(Source("Co-92", date3, 4.2e16, 10004, 1e-4));
 
         //Define detector
@@ -41,7 +44,10 @@ int main()
         //Print out source data and detector counts for all sources
         for(size_t i{}; i<sources.size(); i++)
         {
+            std::cout<<"Printing sources..."<<std::endl;
             sources[i].print_source_data();
+
+            std::cout<<"Detecting counts..."<<std::endl;
             int d1_counts{d1.detect_counts(sources[i])};
             std::cout<<"Number of counts from "<<d1.get_type()<<" detector = " <<d1_counts<<"\n"<<std::endl;
         }

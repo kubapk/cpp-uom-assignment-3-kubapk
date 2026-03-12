@@ -52,3 +52,12 @@ The following sources were used in the research for this assignment.
 [5] https://ionactive.co.uk/resource-hub/technical-guidance/radiation-safety-data-radioactive/ionactive-radioisotope-data-resource
 
 [6] https://en.wikipedia.org/wiki/Specific_activity
+
+## TO DO
+- Change files to be read as tab separated, allowing for multiple words for source type or detector type
+- Print out map (key--value) if user asks for get_valid_sources()
+- Validate detectors based on file
+- Find way to allow two different variable types to depend on each other without calling them in the same setter
+- Move all setter code to the Source.cpp & Detector.cpp files if its too long
+- User should not be able to set measurement time if they have set the detector status to be off
+- Introduce reasonable upper limit for detector time

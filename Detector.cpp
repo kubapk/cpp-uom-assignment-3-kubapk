@@ -12,12 +12,13 @@ Last updated on XXX XX Mar 2026
 
 #include<iostream>
 #include<random> //to generate random numbers
+#include<fstream> //for files
 #include "Source.h"
 #include "Detector.h"
 
 
 //Member function to produce random detector counts
-int Detector::detect_counts(const Source source_input) const
+int Detector::detect_counts(const Source& source_input) const
 {
     if(!status) return 0; //if status is false (i.e. detector is off)
 
@@ -43,6 +44,30 @@ int Detector::detect_counts(const Source source_input) const
 //Member function to print out detector data
 void Detector::print_detector_data() const
 {
-    std::cout<<"Detector: [type, status, efficiency, measurement time] = ["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
+    std::cout<<"Detector: [type, status, efficiency, measurement time (s)] = "
+    "["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
+
     return;
+}
+
+
+//Create empty map ready to store data from "valid_detectors" file
+std::map<string, double> Detector::valid_detectors;
+
+
+//Member function to load in valid detectors from file
+void Detector::load_valid_detectors(const string detector_file_name)
+{
+    std::ifstream read_file(detector_file_name);
+
+    string detector_type;
+    double detector_efficiency;
+
+    while(read_file >> detector_type >> detector_efficiency)
+    //read_file is sent to detector type (the first thing it reads)
+    //2nd thing read_file reads is then sent to detector_efficiency
+    {
+        valid_detectors[detector_type] = detector_efficiency;
+        //sets detector_type to be key and detector_efficiency to be value
+    }
 }

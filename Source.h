@@ -70,7 +70,7 @@ public:
         {
             throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg must be a positive number.");
         }
-        if(relative_error > 0.05) //if activity does not match source type in valid_sources up to 5% tolerance
+        if(relative_error > 0.05) //if activity does not match source type in source validation file up to 5% tolerance
         {
             throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg does not match source type "+type_in+
             ", as specified in source validation file.");
@@ -127,7 +127,7 @@ public:
 
     //Prototyping member functions
     void print_source_data() const;
-    static void load_valid_sources(const string file_name);
+    static void load_valid_sources(const string source_file_name);
 };
 
 #endif //if source_h is already defined, everything between #ifndef and #endif is skipped
