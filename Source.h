@@ -123,6 +123,7 @@ public:
     int get_identifier() const {return identifier;}
     double get_mass() const {return mass;}
     static std::set<int> get_used_ids() {return used_ids;}
+    string get_valid_sources() {return "See valid sources file";}
 
     //Prototyping member functions
     void print_source_data() const;
