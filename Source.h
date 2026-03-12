@@ -55,14 +55,16 @@ public:
     {
         auto iterator = valid_sources.find(type_in); //pointer to element in map
 
-        if(valid_sources.count(type_in) == 0) //if type_in does not exist in list
+        if(iterator == valid_sources.end()) //if type_in does not exist in list
+        //i.e. if the iterator reaches the end it has not found type_in in the map
         {
             throw std::invalid_argument(type_in+" is not a valid source type (from list).");
         }
 
         double expected = iterator->second; //activity value in list corrresponding to type_in
+        double relative_error = std::abs(activity - expected) / expected;
 
-        if(std::abs(activity - expected) > 1e-6 * expected) //if activity does not match source type in list
+        if(relative_error > 0.05) //if activity does not match source type in list up to 5% tolerance
         {
             throw std::invalid_argument("Activity "+std::to_string(activity_in)+" does not match source type " + type_in);
         }
