@@ -19,6 +19,8 @@ int main()
 {
     try
     {
+        Source::load_valid_sources("valid_detectors_sources.txt");
+        //specify file to check sources from
         vector<Source> sources; //empty vector of "Source" objects
 
         Date date1(8, 3, 2026);
@@ -26,9 +28,9 @@ int main()
         Date date3(10, 3, 2026);
 
         //Add sources to vector
-        sources.push_back(Source("Na-22", date1, 24.5, 10001));
-        sources.push_back(Source("Cs-136", date2, 34.5, 10002));
-        sources.push_back(Source("Co-92", date3, 44.5, 10002));
+        sources.push_back(Source("Na-22", date1, 2.31e17, 10001));
+        sources.push_back(Source("Cs-136", date2, 3.2, 10002));
+        sources.push_back(Source("Co-92", date3, 4.2, 10003));
 
         //Define detector
         Detector d1("Scintillator", true, 0.1, 10);

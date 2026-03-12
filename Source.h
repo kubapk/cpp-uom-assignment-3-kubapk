@@ -19,6 +19,7 @@ Last updated on XXX XX Mar 2026
 #include<cmath>
 #include <stdexcept> //to report errors
 #include <set> //to store a vector of unique numbers
+#include <map> //to store key--value pairs
 #include "Date.h"
 using std::string;
 
@@ -29,7 +30,10 @@ private:
     Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
+
     static std::set<int> used_ids; //identifiers previously used
+    static std::map<string, double> valid_sources; 
+    //map "valid_sources" with string (source type) as key and double as value (activity)
 
 public:
     //Default constructor
@@ -38,9 +42,8 @@ public:
     //Paramterised constructor
     Source(string type_in, Date date_in, double activity_in, int identifier_in)
     {
-        set_type(type_in);
+        set_type_activity(type_in, activity_in);
         set_date(date_in);
-        set_activity(activity_in);
         set_identifier(identifier_in);
     } 
 
@@ -48,14 +51,29 @@ public:
     ~Source() = default;
 
     //Setters
-    void set_type(const string type_in) 
+    void set_type_activity(const string type_in, const double activity_in)
     {
-        if(!(type_in == "Na-22" || type_in == "Cs-136" || type_in == "Co-92"))
+        auto iterator = valid_sources.find(type_in); //pointer to element in map
+
+        if(valid_sources.count(type_in) == 0) //if type_in does not exist in list
         {
-            throw std::invalid_argument("Source type must be either Na-22, Cs-136, or Co-92.");
+            throw std::invalid_argument(type_in+" is not a valid source type (from list).");
         }
 
-        type = type_in; 
+        double expected = iterator->second; //activity value in list corrresponding to type_in
+
+        if(std::abs(activity - expected) > 1e-6 * expected) //if activity does not match source type in list
+        {
+            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" does not match source type " + type_in);
+        }
+        if(activity_in < 0)
+        {
+            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" must be a positive number.");
+        }
+
+        type = type_in;
+        activity = activity_in;
+
     }
 
     void set_date(const Date date_in)
@@ -66,16 +84,6 @@ public:
         }
 
         date_acquisition = date_in;
-    }
-
-    void set_activity(const double activity_in)
-    {
-        if(activity_in < 0)
-        {
-            throw std::invalid_argument("Activity must be a positive number.");
-        }
-
-        activity = activity_in;
     }
 
     void set_identifier(const int identifier_in)
@@ -102,6 +110,7 @@ public:
 
     //Prototyping member functions
     void print_source_data() const;
+    static void load_valid_sources(const string file_name);
 };
 
 #endif //if source_h is already defined, everything between #ifndef and #endif is skipped
