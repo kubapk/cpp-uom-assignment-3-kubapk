@@ -30,7 +30,7 @@ private:
     Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
-    double mass{}; //mass of source element used
+    double mass{}; //mass of source element used, in kg
 
     static std::set<int> used_ids; //identifiers previously used
     static std::map<string, double> valid_sources; 
@@ -41,11 +41,12 @@ public:
     Source() = default;
 
     //Paramterised constructor
-    Source(string type_in, Date date_in, double activity_in, int identifier_in)
+    Source(string type_in, Date date_in, double activity_in, int identifier_in, double mass_in)
     {
         set_type_activity(type_in, activity_in);
         set_date(date_in);
         set_identifier(identifier_in);
+        set_mass(mass_in);
     } 
 
     //Destructor
@@ -56,23 +57,23 @@ public:
     {
         auto iterator = valid_sources.find(type_in); //pointer to element in map
 
-        if(iterator == valid_sources.end()) //if type_in does not exist in list
+        if(iterator == valid_sources.end()) //if type_in does not exist in source validation file
         //i.e. if the iterator reaches the end it has not found type_in in the map
         {
-            throw std::invalid_argument(type_in+" is not a valid source type (from list).");
+            throw std::invalid_argument(type_in+" is not a valid source type (from source validation file).");
         }
 
-        double expected = iterator->second; //activity value in list corrresponding to type_in
+        double expected = iterator->second; //activity value in source validation file corrresponding to type_in
         double relative_error = std::abs(activity_in - expected) / expected;
 
-        if(activity_in < 0) //disallows negative values even if present in validaiton file.
+        if(activity_in < 0) //disallows negative values even if present in source validation file.
         {
-            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" must be a positive number.");
+            throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg must be a positive number.");
         }
         if(relative_error > 0.05) //if activity does not match source type in valid_sources up to 5% tolerance
         {
-            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" does not match source type "+type_in+
-            ", as specified in validation file.");
+            throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg does not match source type "+type_in+
+            ", as specified in source validation file.");
         }
 
         type = type_in;
@@ -105,11 +106,22 @@ public:
         used_ids.insert(identifier_in);
     }
 
+    void set_mass(const double mass_in)
+    {
+        if(mass_in <= 0 || mass_in > 0.001) //if mass is less than/equal to 0 or greater than 1g
+        {
+            throw std::invalid_argument("Source mass "+std::to_string(mass_in)+"kg is invalid." 
+            " Mass must be between 0 and 1g (0g is invalid).");
+        }
+        mass = mass_in;
+    }
+
     //Getters
     string get_type() const {return type;}
     Date get_date() const {return date_acquisition;}
     double get_activity() const {return activity;}
     int get_identifier() const {return identifier;}
+    double get_mass() const {return mass;}
     static std::set<int> get_used_ids() {return used_ids;}
 
     //Prototyping member functions

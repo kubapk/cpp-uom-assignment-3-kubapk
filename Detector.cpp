@@ -28,8 +28,8 @@ int Detector::detect_counts(const Source source_input) const
     //static ensures that if the function is called again, it generates a new seed following the sequence
     //of rdm, instead of using the first seed each time the function is called
 
-    double mass{1e-9}; //kg (assumed source mass)
     double activity{source_input.get_activity()}; //gets activity from source
+    double mass{source_input.get_mass()}; //gets mass from source
     double mean_counts{activity * mass * efficiency * measurement_time}; //assuming even distribution over time
 
     std::poisson_distribution<int> dist(mean_counts); 

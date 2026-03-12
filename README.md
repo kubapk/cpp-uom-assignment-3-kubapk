@@ -26,13 +26,14 @@ When creating your own sources or detectors, they must be ones which exist in th
  - Tried to overcome this using `stdexcept` library, which enabled arguments to be raised, which could then be printed out using `.what()` in the main code. This enabled direct print outs to be avoided in the class scripts, but still meant the code continued to be printed out.
  - This was finally overcome by putting the code under `try`, and printing out the error message defined in the class using `catch`. This meant code did not continue to execute if an error was picked up.
  - In order to validate the date input, a separate class was ceated so that the `Source` class did not become overwhelmed with validation checks, and so that it was easier to extract out the day, month and year to perform the checks. It also prevents ambiguity in formatting the date (e.g. British vs American date format, or whether year contains 2 or 4 digits).
+ - A lot of errors in code came about because of using private data members when performing validation chedcks inside setters, which are set to 0 until the setter function is completed, instead of the inputted values when an object is declared in the main code (`assignment-3.cpp`).
 
  ### Unique source identifiers
  - To ensure unique identifiers, the `set` library was used to store all identifiers created by the user in a vector, disallowing any 2 entries to be the same.
  - `static` was also useful here, meaning if the code was re-run, the identifiers would be remembered and so duplicated idenifiers would produce an error.
  - To ensure compilation worked, the set `used_ids` needed to be initialised (with no elements) in the `Source.cpp` file.
 
-
+ - A lot of errors came about because of v
 
 ## Disclosure of Delegation to Generative AI
 TBC
