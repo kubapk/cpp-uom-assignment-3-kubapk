@@ -17,9 +17,9 @@ Last updated on XXX XX Mar 2026
 #include<iostream>
 #include<string>
 #include<cmath>
-#include <stdexcept> //to report errors
-#include <set> //to store a vector of unique numbers
-#include <map> //to store key--value pairs
+#include<stdexcept> //to report errors
+#include<set> //to store a vector of unique numbers
+#include<map> //to store key--value pairs
 #include "Date.h"
 using std::string;
 
@@ -30,6 +30,7 @@ private:
     Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
     int identifier{}; //unique number to identify the source
+    double mass{}; //mass of source element used
 
     static std::set<int> used_ids; //identifiers previously used
     static std::map<string, double> valid_sources; 
@@ -62,15 +63,16 @@ public:
         }
 
         double expected = iterator->second; //activity value in list corrresponding to type_in
-        double relative_error = std::abs(activity - expected) / expected;
+        double relative_error = std::abs(activity_in - expected) / expected;
 
-        if(relative_error > 0.05) //if activity does not match source type in list up to 5% tolerance
-        {
-            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" does not match source type " + type_in);
-        }
-        if(activity_in < 0)
+        if(activity_in < 0) //disallows negative values even if present in validaiton file.
         {
             throw std::invalid_argument("Activity "+std::to_string(activity_in)+" must be a positive number.");
+        }
+        if(relative_error > 0.05) //if activity does not match source type in valid_sources up to 5% tolerance
+        {
+            throw std::invalid_argument("Activity "+std::to_string(activity_in)+" does not match source type "+type_in+
+            ", as specified in validation file.");
         }
 
         type = type_in;
@@ -92,11 +94,11 @@ public:
     {
         if(identifier_in < 0)
         {
-            throw std::invalid_argument("ID of source must be a positive number.");
+            throw std::invalid_argument("Source ID must be a positive number.");
         }
         if(used_ids.count(identifier_in) !=0) //returns 0 if idenifier_in appears 0 times in used_ids
         {
-            throw std::invalid_argument("A source ID has been used twice.");
+            throw std::invalid_argument("The source ID "+std::to_string(identifier_in)+" has been used more than once.");
         }
 
         identifier = identifier_in;
