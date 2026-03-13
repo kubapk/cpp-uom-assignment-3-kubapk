@@ -3,7 +3,7 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source.
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source. The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in the validation files, `valid_sources.txt` and `valid_detectors.txt` which contain the source type and activity, and detector type and efficiency.
 >
 > The classes defined in this program are:
 > - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
@@ -83,3 +83,4 @@ The following sources were used in the research for this assignment.
 - Cannot allow the mean number of counts to be greater than what long long can store
 - Detector file allows for negative value, and does not check if it matches with user inputted
 - Catch extra characters at the end of a line when reading file
+- Do not allow for duplicate detectors?

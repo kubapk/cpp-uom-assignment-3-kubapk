@@ -85,40 +85,54 @@ void Detector::load_valid_detectors(const string& detector_file_name)
 
     while (getline(read_file, line)) //While getline(source, destination) is true, i.e. there is a line to be read
     {
-        std::stringstream ss(line); //create string stream called ss and initialise it with "line", i.e. first line in file
+        //Ignore blank lines or header lines
+        if(line.empty() || line[0] == '#') {continue;}
 
+        std::stringstream ss(line); //create string stream called ss and initialise it with "line", i.e. first line in file
         string detector_type;
-        string detector_efficiency_str; //later converted to int
-        string extra;
+        string detector_efficiency_str; //string to use in string stream
 
         //Try to read detector type & efficiency with semicolon separation
-        //getline(input stream, string to put date int, delimiter character)
         if(!getline(ss, detector_type, ';') || !getline(ss, detector_efficiency_str))
         {
-            std::cout << "TYPE: {" << detector_type << "} "
-            << "EFF: {" << detector_efficiency_str << "}\n";
-
-            std::cerr<<"  The line {"<<line<<"} in detector validation file is incorrectly formatted."<<std::endl;
+            std::cerr<<"Detector validation file error: The line {"<<line<<"} is incorrectly formatted."
+            " Line will not contribute to valid detectors."<<std::endl;
             continue; //skip rest of current iteration and move to the next one (ignore line)
         }
 
-        double detector_efficiency{std::stod(detector_efficiency_str)}; //convert efficiency into double
-        valid_detectors[detector_type] = detector_efficiency;
-
-        //Check no extra characters in file
-        if(!(ss >> detector_efficiency) || (ss >> extra))
+        //Ignore lines with blank dector_type
+        if(detector_type.empty())
         {
-            std::cerr << "Invalid efficiency in line {" << line << "}.\n";
+            std::cerr<<"Detector validation file error: The line {"<<line<<"} contains a blank detector type."
+            " Line will not contriute to valid detectors."<<std::endl;
+            continue; 
+        }
+
+        //Ignore lines with extra characters after detector_efficiency
+        string extra;
+        double detector_efficiency{std::stod(detector_efficiency_str)}; //converts efficiency to double
+
+        std::stringstream efficiency_stream(detector_efficiency_str); //create new stream to check after efficiency
+        if(!(efficiency_stream >> detector_efficiency) || (efficiency_stream >> extra))
+        //returns true if it cannot extract double from detector_efficiency, or if it can extract more characters after 
+        //reading efficiency
+        {
+            std::cerr<<"Detector validation file error: Extra characters found in line {"<<line<<"}."
+            " Line will not contribute to valid detectors."<<std::endl;
             continue;
         }
 
+        //Add file line to map if it passes the if statements above
+        valid_detectors[detector_type] = detector_efficiency;
 
         //Check efficiency range is valid
-        if(detector_efficiency < 0 || detector_efficiency > 1) //disallows efficiency not in [0, 1]
+        if(detector_efficiency <= 0 || detector_efficiency > 1) //disallows efficiency not in (0, 1]
         {
-            throw std::invalid_argument("Efficiency in line {"+line+"} of detector validation file is not between 0 and 1. Efficiency must be"
-            "between 0 and 1 inclusive."); //does not allow program to continue
+            throw std::invalid_argument("Efficiency in line {"+line+"} of detector validation file is invalid. Efficiency must be"
+            " greater than 0 and at most 1."); //does not allow program to continue
         }
+
+        read_file.close();
     }
 
 }

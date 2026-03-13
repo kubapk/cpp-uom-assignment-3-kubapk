@@ -36,7 +36,7 @@ int main()
         sources.push_back(Source("Co-92", date3, 4.2e16, 10004, 1e-9));
 
         //Define detector
-        Detector d1("Scintillator", true, 1, 10);
+        Detector d1("Scintillator", true, 0.1, 10);
         std::cout<<"NEW DETECTOR CREATED"<<std::endl;
         d1.print_detector_data();
         std::cout<<"\nSOURCE DATA"<<std::endl;
