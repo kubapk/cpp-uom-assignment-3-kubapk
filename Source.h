@@ -29,8 +29,8 @@ private:
     string type{}; //radioactive source element
     Date date_acquisition{}; //date of source acquisition
     double activity{}; //source activity at time of acquisition, in Bq/kg
-    int identifier{}; //unique number to identify the source
     double mass{}; //mass of source element used, in kg
+    int identifier{}; //unique number to identify the source
 
     static std::set<int> used_ids; //identifiers previously used
     static std::map<string, double> valid_sources; 

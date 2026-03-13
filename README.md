@@ -8,7 +8,7 @@
 > The classes defined in this program are:
 > - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
-> - **Date**: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
+> - **Date**: An object of this class has a day, month, and year.
 >
 > ### Program limitations
 > Note that the detector measurement time cannot be greater than 1 hour in this program due to constraints in storing integers. Also, the efficiency property of the detector (between 0 and 1)
@@ -19,7 +19,7 @@
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 assignment-3.cpp Source.cpp Detector.cpp Date.cpp -o main.exe`. The program can then be run by calling the file `main.exe`.
 
 ### Modifying the program
-This guidelines are intended for a user who wishes to the classes in this project (e.g. to build their own main function).
+The guidelines in this section are intended for a user who wishes to create their own main file using the classes defined in this program.
 
 #### Keeping defined sources & detectors (working in main file)
 When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector.
@@ -28,8 +28,9 @@ Source properties:
  | Property      | Limitations |
 | ----------- | ----------- |
 | Type      | N/A       |
-| Date of acquisition   | Date in the format DD/MM/YYYY  |
+| Date of acquisition   | Date in the format date(DD, MM, YYYY) |
 | Activity (Bq/kg) | N/A |
+| Mass (kg) | Float greater than 0kg and at most 1mg (1e-6kg) |
 | Idenifier | Integer unique to a source |
 
 Detector properties:
@@ -38,10 +39,10 @@ Detector properties:
 | Type      | N/A       |
 | Status (on or off)   | true (on) or false (off)  |
 | Efficiency | Float greater than 0 and at most 1 |
-| Measurement time (seconds) | Float of measurement time, max 3600 seconds (1 hour) |
+| Measurement time (seconds) | Float, min 1 second & max 3600 seconds (1 hour) |
 
 #### Modifying defined sources & detectors
-If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be tab-separated. If this format is not followed, the line will be skipped and so will not be interpretted as a valid source or detector.
+If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` in the main file with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be seperated by semicolons. If this format is not followed on any given line in the file, the line will be skipped and so will not be interpretted as a valid source or detector.
 
 ## Program Reasoning
 ### Data validation
