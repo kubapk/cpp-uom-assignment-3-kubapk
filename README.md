@@ -55,6 +55,8 @@ The following sources were used in the research for this assignment.
 
 [7] https://cplusplus.com/reference/random/normal_distribution/
 
+[8] https://uwm.edu/safety-health/wp-content/uploads/sites/405/2016/11/BLBK.pdf
+
 ## TO DO
 - Change files to be read as tab separated, allowing for multiple words for source type or detector type
 - Print out map (key--value) if user asks for get_valid_sources()
@@ -67,4 +69,4 @@ The following sources were used in the research for this assignment.
 - Check detectors efficiencies are accurate
 - Check date is a past date (do not allow dates greater than today)
 - Find source for detect_counts formula
-- Use long long for counts?
+- Use long long for counts and then increae time limit? safer in any case - may be some cases you haven't checked

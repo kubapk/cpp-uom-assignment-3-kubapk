@@ -85,7 +85,7 @@ public:
     {
         if(!date_in.is_valid_past_date())
         {
-            throw std::invalid_argument("Date is not valid. Ensure format is DD/MM/YYYY.");
+            throw std::invalid_argument("Date is not valid for "+type+" source. Ensure format is DD/MM/YYYY.");
         }
 
         date_acquisition = date_in;
@@ -110,11 +110,11 @@ public:
     {
         if(mass_in == 0)
         {
-            throw std::invalid_argument("Source mass cannot be 0kg.");
+            throw std::invalid_argument(type+" source mass cannot be 0kg.");
         }
         if(mass_in < 0 || mass_in > 1e-6) //if mass is less than/equal to 0 or greater than 1mg
         {
-            throw std::invalid_argument("Source mass "+std::to_string(mass_in)+"kg is invalid." 
+            throw std::invalid_argument("The mass "+std::to_string(mass_in)+"kg for "+type+" source is invalid." 
             " Mass must be between 0 and 1mg (1e-6 kg).");
         }
         mass = mass_in;
@@ -127,7 +127,7 @@ public:
     int get_identifier() const {return identifier;}
     double get_mass() const {return mass;}
     static std::set<int> get_used_ids() {return used_ids;}
-    string get_valid_sources() {return "See valid sources file";}
+    static std::map<string, double> get_valid_sources() {return valid_sources;}
 
     //Prototyping member functions
     void print_source_data() const;

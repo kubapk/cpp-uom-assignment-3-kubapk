@@ -82,6 +82,10 @@ public:
 
     void set_measurement_time(const double measurement_time_in)
     {
+        if(!status) //works as long as status is set before measurement_time
+        {
+            throw std::invalid_argument("Cannot set measurement time for "+type+" detector whose status if OFF.");
+        }
 
         if(measurement_time_in < 1 || measurement_time_in > 3600)
         {
