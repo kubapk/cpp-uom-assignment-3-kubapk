@@ -76,7 +76,7 @@ An improvement to this program could be to allow for a range of detector efficie
 The author (Kuba Kane) declares the use of generative AI in the research and coding process. The following tasks were delegated to GAI tools under full human supervision:
 
 - Idea generation
-- Literature search and systematization
+- Literature search
 - Code generation
 - Code optimization
 
