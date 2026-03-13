@@ -3,15 +3,19 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source. The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties.
 >
-> The classes defined in this program are:
+> The following classes are defined in this program to give such properties:
 > - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - **Date**: An object of this class has a day, month, and year.
 >
+> Sources can be passed into detectors using the `detect_counts` function from the **Detector** class, which gives a random source count generated from a normal distribution of the mean counts (found by mutliply source's activity with its mass as well as the detector's efficiency and measurement time). The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
+>
 > ### Program limitations
-> Note that the detector measurement time cannot be greater than 1 hour in this program due to constraints in storing integers. Also, the efficiency property of the detector (between 0 and 1)
+> While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
+>
+> In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large that it goes beyond the maximum memory allocated to an integer in C++.
 
 
 ## User Guidelines
@@ -27,8 +31,8 @@ When creating your own sources or detectors, they must be ones which exist in th
 Source properties:
  | Property      | Limitations |
 | ----------- | ----------- |
-| Type      | N/A       |
-| Date of acquisition   | Date in the format date(DD, MM, YYYY) |
+| Type      | String, spaces permitted       |
+| Date of acquisition   | Date in the format `date(DD, MM, YYYY)` |
 | Activity (Bq/kg) | N/A |
 | Mass (kg) | Float greater than 0kg and at most 1mg (1e-6kg) |
 | Idenifier | Integer unique to a source |
@@ -36,8 +40,8 @@ Source properties:
 Detector properties:
  | Property      | Limitations |
 | ----------- | ----------- |
-| Type      | N/A       |
-| Status (on or off)   | true (on) or false (off)  |
+| Type      | String, spaces permitted      |
+| Status (ON or OFF)   | true (ON) or false (OFF), must be ON to detect counts |
 | Efficiency | Float greater than 0 and at most 1 |
 | Measurement time (seconds) | Float, min 1 second & max 3600 seconds (1 hour) |
 
