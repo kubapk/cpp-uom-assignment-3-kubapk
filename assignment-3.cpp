@@ -27,7 +27,7 @@ int main()
         vector<Source> sources; 
 
         Date date1(8, 3, 2026);
-        Date date2(9, 24, 2026);
+        Date date2(9, 3, 2026);
         Date date3(10, 3, 2026);
 
         //Add sources to vector
@@ -46,7 +46,7 @@ int main()
         {
             sources[i].print_source_data();
 
-            int d1_counts{d1.detect_counts(sources[i])};
+            long long d1_counts{d1.detect_counts(sources[i])};
             std::cout<<"Number of counts from "<<d1.get_type()<<" detector in "
             <<d1.get_measurement_time()<<"s = " <<d1_counts<<"\n"<<std::endl;
         }

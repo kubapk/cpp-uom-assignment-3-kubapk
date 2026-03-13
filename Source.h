@@ -131,7 +131,7 @@ public:
 
     //Prototyping member functions
     void print_source_data() const;
-    static void load_valid_sources(const string source_file_name);
+    static void load_valid_sources(const string& source_file_name); //file name passed by reference
 };
 
 #endif //if source_h is already defined, everything between #ifndef and #endif is skipped

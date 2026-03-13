@@ -13,12 +13,13 @@ Last updated on XXX XX Mar 2026
 #include<iostream>
 #include<random> //to generate random numbers
 #include<fstream> //for files
+#include<limits> //to check for maximum variable memory in compiler
 #include "Source.h"
 #include "Detector.h"
 
 
 //Member function to produce random detector counts
-int Detector::detect_counts(const Source& source_input) const
+long long Detector::detect_counts(const Source& source_input) const
 {
     if(!status) return 0; //if status is false (i.e. detector is off)
 
@@ -35,11 +36,19 @@ int Detector::detect_counts(const Source& source_input) const
     double mass{source_input.get_mass()}; //gets mass from source
     double mean_counts{activity * mass * efficiency * geometry_factor * measurement_time}; //assuming even distribution over time
 
+    if(mean_counts > std::numeric_limits<long long>::max())
+    {
+        throw std::invalid_argument("Detector cannot generate counts as value is too large to be stored. Ensure detector and source properties"
+        " are physically reasonable.");
+    }
+
+
     std::normal_distribution<double> dist(mean_counts, std::sqrt(mean_counts)); 
     //creates Poisson distribution with expected value = mean_counts and generates integer results
     //around that mean
+    //dist is of type double so must be cast to int (long long to allow for longer ints)
 
-    return dist(gen); //random number produced following Poisson distribution - fluctuations around mean
+    return static_cast<long long>(dist(gen)); //random number produced following normal distribution - fluctuations around mean
 }
 
 
@@ -58,7 +67,7 @@ std::map<string, double> Detector::valid_detectors;
 
 
 //Member function to load in valid detectors from file
-void Detector::load_valid_detectors(const string detector_file_name)
+void Detector::load_valid_detectors(const string& detector_file_name)
 {
     std::ifstream read_file(detector_file_name);
 

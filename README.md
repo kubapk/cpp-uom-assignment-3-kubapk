@@ -2,13 +2,16 @@
 # PHYS30762 Assignment 3 - Practising Classes
 
 > [!IMPORTANT]
-> ### PROGRAM SUMMARY
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a Poisson distribution of the properties of the source.
+> ### Program summary
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source.
 >
 > The classes defined in this program are:
 > - `Source`: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
 > - `Detector`: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - `Date`: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
+>
+> ### Program limitations
+> Users are advised, due to memory constraints, the detector measurement time cannot be greater than 1 hour in this program.
 
 
 ## User Guidelines
@@ -70,3 +73,7 @@ The following sources were used in the research for this assignment.
 - Check date is a past date (do not allow dates greater than today)
 - Find source for detect_counts formula
 - Use long long for counts and then increae time limit? safer in any case - may be some cases you haven't checked
+- File read in validation checks, see assignment-2 also for closing files etc
+- Ensure all functions defined in the class are functional
+- Find literature / source for detectors & their efficiency
+- Cannot allow the mean number of counts to be greater than what long long can store
