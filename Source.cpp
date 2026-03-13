@@ -144,10 +144,9 @@ void Source::load_valid_sources(const string& source_file_name)
         if(source_type.empty())
         {
             std::cerr<<"Source validation file error: The line {"<<line<<"} contains a blank source type."
-            " Line will not contriute to valid sources."<<std::endl;
+            " Line will not contribute to valid sources."<<std::endl;
             continue; 
         }
-
 
         //Ignore extra characters after source_activity
         string extra;

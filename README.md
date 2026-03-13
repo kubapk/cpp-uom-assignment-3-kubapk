@@ -3,10 +3,10 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program allows you to define radioactive sources and detectors with certain properties. The sources are also given a unique identifier.
+> This program allows you to define radioactive sources and detectors with certain properties, amongst which sources are given a unique identifier (ID).
 >
-> The following classes are defined in this program to handle these properties:
-> - **Source**: Gives the radioactive source a type, date of acquistion, specific activity (Bq/kg), mass (kg), and a unique identifier.
+> The following classes are defined in this program to handle the source and detector properties:
+> - **Source**: Gives the radioactive source a type, date of acquisition, specific activity (Bq/kg), mass (kg), and a unique identifier.
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - **Date**: An object of this class has a day, month, and year.
 >
@@ -47,9 +47,9 @@ If you wish to enable more types of sources or detectors, you must modify the so
 ## Program Limitations
 While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
 
-In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large. This also ensures that the mean counts value doesn't go beyond the maximum memory allocated to an integer (specifically, of type long long) in C++.
+In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large. This also ensures that the mean counts value doesn't go beyond the maximum memory allocated to an integer (specifically, of type *long long*) in C++.
 
-An improvement to this program could be to allow for a range of detector efficiencies.
+An improvement to this program could be to allow for a range of detector efficiencies for which the user could enter in the main file.
 
 
 ## Program Reasoning
@@ -58,7 +58,7 @@ An improvement to this program could be to allow for a range of detector efficie
  - Tried to overcome this using `stdexcept` library, which enabled arguments to be raised, which could then be printed out using `.what()` in the main code. This enabled direct print outs to be avoided in the class scripts, but still meant the code continued to be printed out.
  - This was finally overcome by putting the code under `try`, and printing out the error message defined in the class using `catch`. This meant code did not continue to execute if an error was picked up.
  - In order to validate the date input, a separate class was ceated so that the **Source** class did not become overwhelmed with validation checks, and so that it was easier to extract out the day, month and year to perform the checks. It also prevents ambiguity in formatting the date (e.g. British vs American date format, or whether year contains 2 or 4 digits).
- - A lot of errors in code came about because of using private data members when performing validation chedcks inside setters, which are set to 0 until the setter function is completed, instead of the inputted values when an object is declared in the main code (`assignment-3.cpp`).
+ - A lot of errors in the code came about because of using private data members when performing validation checks inside setters, which are set to 0 until the setter function is completed. Instead of the private data members, the inputs for the setters needed to be used (i.e. the input to the object written in the main code, `assignment-3.cpp`) so that correct values were being used.
 
  ### Unique source identifiers
  - To ensure unique identifiers, the `set` library was used to store all identifiers created by the user in a vector, disallowing any 2 entries to be the same.
@@ -67,6 +67,8 @@ An improvement to this program could be to allow for a range of detector efficie
  - A lot of errors came about because of using the private data memebers when valudating inputs receieved in setters, instead of the actual input given to the setters.
 
  ### File validation
+ - These files contain just two fields, their type and the efficiency (for detector) or activity (for source) and so it was convenient to use a map `map<string, double>`, where the type was the key and the other quantity (double) was the value. This then allowed to create a check that, e.g. the activity written in main for the source matches the activity delcared in the file for the same source. This was done using an iterator which stores the index of a source, which is declared first, and finding the corresponding activity using that index. A 5% difference in values was allowed as there were sometimes rounding errors, perhaps due to the way the data is stored or extracted from the file.
+ - Map needed to be initialised in implementation file so that it exists outside of the class and can be used as a static counter throughout the program.
  - Having `file.close()` inside of the read_line while loop caused only the first line to be read, and so file closing needed to be moved outside of the while loop.
  - Having so many validation checks in the class header file meant it was a very long file, and so I only prototyped the setters (as if they were member functions) in the header file, and defined them in the implementation files (`Source.cpp` and `Detector.cpp`)
 
@@ -106,15 +108,3 @@ The following sources were used in the research for this assignment.
 [8] https://uwm.edu/safety-health/wp-content/uploads/sites/405/2016/11/BLBK.pdf
 
 [9] https://en.cppreference.com/w/c/chrono/time_t
-
-## TO DO
-- Print out map (key--value) if user asks for get_valid_sources() --> or remove function
-- Move all setter code to the Source.cpp & Detector.cpp files if its too long
-- Find source for detect_counts formula
-- Ensure all functions defined in the class are functional - or remove them
-- Detector file allows for negative value, and does not check if it matches with user inputted
-- Do not allow for duplicate detectors?
-- What if whitespace is put infront of source activity in file?
-- Not capital senstive?
-- Dates need to be defined inside Source.cpp?
-- Sometimes file error lets you continue & sometimes stops the program - consistency?
