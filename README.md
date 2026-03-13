@@ -10,12 +10,7 @@
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - **Date**: An object of this class has a day, month, and year.
 >
-> Sources can be passed into detectors using the `detect_counts` function from the **Detector** class, which gives a random source count generated from a normal distribution of the mean counts (found by mutliply source's activity with its mass as well as the detector's efficiency and measurement time). The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
->
-> ### Program limitations
-> While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
->
-> In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large that it goes beyond the maximum memory allocated to an integer in C++.
+> Sources can be passed into detectors using the `detect_counts` function from the **Detector** class, which gives a random source count generated from a normal distribution of the mean counts (found by mutliplying a source's activity with its mass as well as the detector's efficiency and measurement time). The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
 
 
 ## User Guidelines
@@ -48,6 +43,13 @@ Detector properties:
 #### Modifying defined sources & detectors
 If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` in the main file with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be seperated by semicolons. If this format is not followed on any given line in the file, the line will be skipped and so will not be interpretted as a valid source or detector.
 
+
+## Program limitations
+While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
+
+In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large that it goes beyond the maximum memory allocated to an integer in C++.
+
+
 ## Program Reasoning
 ### Data validation
  - Originally tried to use "if-else" statements in the **Source** class to print out an error message if the data inputted was invalid. However, the code continued to print out the source object properties, leaving the invalid property blank.
@@ -60,8 +62,7 @@ If you wish to enable more types of sources or detectors, you must modify the so
  - To ensure unique identifiers, the `set` library was used to store all identifiers created by the user in a vector, disallowing any 2 entries to be the same.
  - `static` was also useful here, meaning if the code was re-run, the identifiers would be remembered and so duplicated idenifiers would produce an error.
  - To ensure compilation worked, the set `used_ids` needed to be initialised (with no elements) in the `Source.cpp` file.
-
- - A lot of errors came about because of v
+ - A lot of errors came about because of using the private data memebers when valudating inputs receieved in setters, instead of the actual input given to the setters.
 
 ## Disclosure of Delegation to Generative AI
 TBC
