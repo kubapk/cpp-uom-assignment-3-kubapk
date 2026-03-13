@@ -16,8 +16,8 @@ Last updated on XXX XX Mar 2026
 
 void Source::print_source_data() const
 {
-    std::cout<<"Source: [type, date (DD/MM/YYYY), activity (Bq/kg), identifier] = ["<<
-        type<<", "<<date_acquisition<<", "<<activity<<", "<<identifier<<"]"<<std::endl;
+    std::cout<<"Source: [type, date (DD/MM/YYYY), activity (Bq/kg), identifier, mass (kg)] = ["<<
+        type<<", "<<date_acquisition<<", "<<activity<<", "<<identifier<<", "<<mass<<"]"<<std::endl;
     return;
 }
 

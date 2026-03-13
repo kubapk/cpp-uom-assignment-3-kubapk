@@ -108,10 +108,14 @@ public:
 
     void set_mass(const double mass_in)
     {
-        if(mass_in <= 0 || mass_in > 0.001) //if mass is less than/equal to 0 or greater than 1g
+        if(mass_in == 0)
+        {
+            throw std::invalid_argument("Source mass cannot be 0kg.");
+        }
+        if(mass_in < 0 || mass_in > 1e-6) //if mass is less than/equal to 0 or greater than 1mg
         {
             throw std::invalid_argument("Source mass "+std::to_string(mass_in)+"kg is invalid." 
-            " Mass must be between 0 and 1g (0g is invalid).");
+            " Mass must be between 0 and 1mg (1e-6 kg).");
         }
         mass = mass_in;
     }

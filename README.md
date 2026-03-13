@@ -53,6 +53,8 @@ The following sources were used in the research for this assignment.
 
 [6] https://en.wikipedia.org/wiki/Specific_activity
 
+[7] https://cplusplus.com/reference/random/normal_distribution/
+
 ## TO DO
 - Change files to be read as tab separated, allowing for multiple words for source type or detector type
 - Print out map (key--value) if user asks for get_valid_sources()
@@ -61,3 +63,8 @@ The following sources were used in the research for this assignment.
 - Move all setter code to the Source.cpp & Detector.cpp files if its too long
 - User should not be able to set measurement time if they have set the detector status to be off
 - Introduce reasonable upper limit for detector time
+- Add more sources & detectors to file
+- Check detectors efficiencies are accurate
+- Check date is a past date (do not allow dates greater than today)
+- Find source for detect_counts formula
+- Use long long for counts?

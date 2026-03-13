@@ -29,11 +29,13 @@ int Detector::detect_counts(const Source& source_input) const
     //static ensures that if the function is called again, it generates a new seed following the sequence
     //of rdm, instead of using the first seed each time the function is called
 
+    double geometry_factor{1e-6}; //Radioactive sources emit radiation isotropically, this takes into account
+    //fraction of detector area to surface area of a sphere
     double activity{source_input.get_activity()}; //gets activity from source
     double mass{source_input.get_mass()}; //gets mass from source
-    double mean_counts{activity * mass * efficiency * measurement_time}; //assuming even distribution over time
+    double mean_counts{activity * mass * efficiency * geometry_factor * measurement_time}; //assuming even distribution over time
 
-    std::poisson_distribution<int> dist(mean_counts); 
+    std::normal_distribution<double> dist(mean_counts, std::sqrt(mean_counts)); 
     //creates Poisson distribution with expected value = mean_counts and generates integer results
     //around that mean
 
@@ -44,7 +46,7 @@ int Detector::detect_counts(const Source& source_input) const
 //Member function to print out detector data
 void Detector::print_detector_data() const
 {
-    std::cout<<"Detector: [type, status, efficiency, measurement time (s)] = "
+    std::cout<<"Detector: [type, status, efficiency, measurement time (s), ] = "
     "["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
 
     return;

@@ -83,9 +83,9 @@ public:
     void set_measurement_time(const double measurement_time_in)
     {
 
-        if(measurement_time_in < 0)
+        if(measurement_time_in < 1 || measurement_time_in > 3600)
         {
-            throw std::invalid_argument("Detector measurement time must be positive.");
+            throw std::invalid_argument("Detector measurement time must be between 1 and 3600 seconds (1 hour).");
         }
 
         measurement_time = measurement_time_in;

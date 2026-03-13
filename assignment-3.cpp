@@ -31,12 +31,12 @@ int main()
         Date date3(10, 3, 2026);
 
         //Add sources to vector
-        sources.push_back(Source("Na-22", date1, 2.31e17, 10003, 1e-9));
+        sources.push_back(Source("Na-22", date1, 2.31e17, 10003, 1e-6));
         sources.push_back(Source("Cs-136", date2, 3.2e15, 10002, 1e-9));
         sources.push_back(Source("Co-92", date3, 4.2e16, 10004, 1e-9));
 
         //Define detector
-        Detector d1("Scintillator", true, 0.1, 10);
+        Detector d1("Scintillator", true, 1, 0);
         std::cout<<"NEW DETECTOR CREATED"<<std::endl;
         d1.print_detector_data();
         std::cout<<"\nSOURCE DATA"<<std::endl;
@@ -44,12 +44,11 @@ int main()
         //Print out source data and detector counts for all sources
         for(size_t i{}; i<sources.size(); i++)
         {
-            std::cout<<"Printing sources..."<<std::endl;
             sources[i].print_source_data();
 
-            std::cout<<"Detecting counts..."<<std::endl;
             int d1_counts{d1.detect_counts(sources[i])};
-            std::cout<<"Number of counts from "<<d1.get_type()<<" detector = " <<d1_counts<<"\n"<<std::endl;
+            std::cout<<"Number of counts from "<<d1.get_type()<<" detector in "
+            <<d1.get_measurement_time()<<"s = " <<d1_counts<<"\n"<<std::endl;
         }
 
     }
