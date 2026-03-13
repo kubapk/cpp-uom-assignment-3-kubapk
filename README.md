@@ -6,7 +6,7 @@
 > This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties.
 >
 > The following classes are defined in this program to give such properties:
-> - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
+> - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), mass (kg), and a unique identifier.
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - **Date**: An object of this class has a day, month, and year.
 >
@@ -41,10 +41,10 @@ Detector properties:
 | Measurement time (seconds) | Float, min 1 second & max 3600 seconds (1 hour) |
 
 #### Modifying defined sources & detectors
-If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` in the main file with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be seperated by semicolons. If this format is not followed on any given line in the file, the line will be skipped and so will not be interpretted as a valid source or detector.
+If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` in the main file with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be seperated by semicolons. If this format is not followed on any given line in the file, the line will be skipped and so will not be interpretted as a valid source or detector. The files may start with a header as long as its on the first line only and starts with `#`.
 
 
-## Program limitations
+## Program Limitations
 While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
 
 In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large that it goes beyond the maximum memory allocated to an integer in C++.
@@ -64,10 +64,13 @@ In reality a detector may be able to be left for several hours, but here the det
  - To ensure compilation worked, the set `used_ids` needed to be initialised (with no elements) in the `Source.cpp` file.
  - A lot of errors came about because of using the private data memebers when valudating inputs receieved in setters, instead of the actual input given to the setters.
 
+ ### File validation
+ - Having `file.close()` inside of the read_line while loop caused only the first line to be read, and so file closing needed to be moved outside of the while loop.
+
 ## Disclosure of Delegation to Generative AI
 TBC
 
-## Sources of information
+## References
 The following sources were used in the research for this assignment.
 
 [1] https://www.mirion.com/discover/knowledge-hub/articles/education/gamma-ray-efficiency-calibration-lab-experiment
@@ -106,3 +109,4 @@ The following sources were used in the research for this assignment.
 - Detector file allows for negative value, and does not check if it matches with user inputted
 - Catch extra characters at the end of a line when reading file
 - Do not allow for duplicate detectors?
+- What if whitespace is put infront of source activity in file?

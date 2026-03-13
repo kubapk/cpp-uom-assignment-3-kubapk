@@ -7,12 +7,14 @@ This implementation file defines member function for the "Source" class.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Mon 9 Mar 2026
-Last updated on XXX XX Mar 2026
 */
 
 #include<iostream>
 #include<fstream> //for files
+#include<sstream> //string stream
+#include<string>
 #include "Source.h"
+using std::string;
 
 void Source::print_source_data() const
 {
@@ -32,14 +34,58 @@ void Source::load_valid_sources(const string& source_file_name)
 {
     std::ifstream read_file(source_file_name);
 
-    string source_type;
-    double source_activity;
-
-    while(read_file >> source_type >> source_activity)
-    //read_file is sent to source type (the first thing it reads)
-    //2nd thing read_file reads is then sent to source_activity
+    //Check if file opened correctly
+    if(!read_file.good())
     {
-        valid_sources[source_type] = source_activity;
-        //sets source_type to be key and source_activity to be value
+        throw std::runtime_error("Source validation file '"+source_file_name+"' could not be opened");
     }
+
+    string line; //read in line from data file
+
+    while(std::getline(read_file, line))
+    {
+        //Ignore blank lines or header lines
+        if(line.empty() || line[0] == '#') {continue;}
+
+        //Create string stream and variables to assign data read by stream
+        std::stringstream ss(line);
+        string source_type;
+        string source_activity_str;
+
+        //Try to read source type & activity with semicolon separation
+        if(!std::getline(ss, source_type, ';') || !std::getline(ss, source_activity_str))
+        {
+            std::cerr<<"Source validation file error: The line {"<<line<<"} is incorrectly formatted."
+            " Line will not contribute to valid sources."<<std::endl;
+            continue; 
+        }
+
+        //Ignore lines with blank source_type
+        if(source_type.empty())
+        {
+            std::cerr<<"Source validation file error: The line {"<<line<<"} contains a blank source type."
+            " Line will not contriute to valid sources."<<std::endl;
+            continue; 
+        }
+
+        //Try to convert activity to a double
+
+        //Ignore extra characters after source_activity
+        string extra;
+        double source_activity{std::stod(source_activity_str)}; //converts activity to double
+        std::stringstream activity_stream(source_activity_str); //create new stream to check after activity
+        if(!(activity_stream >> source_activity) || (activity_stream >> extra))
+        //returns true if it cannot extract double from source_activity, or if it can extract more characters after 
+        //reading activity
+        {
+            std::cerr<<"Source validation file error: Extra characters found in line {"<<line<<"}."
+            " Line will not contribute to valid sources."<<std::endl;
+            continue;
+        }
+
+        //Add file line to map (type is key and activity is value)
+        valid_sources[source_type] = source_activity;
+    }
+
+    read_file.close();
 }

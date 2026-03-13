@@ -83,7 +83,7 @@ public:
 
         if(measurement_time_in < 1 || measurement_time_in > 3600)
         {
-            throw std::invalid_argument("Detector measurement time must be between 1 and 3600 seconds (1 hour).");
+            throw std::invalid_argument("Measurement time for "+type+" detector is invalid. Must be between 1 and 3600 seconds (1 hour).");
         }
 
         measurement_time = measurement_time_in;

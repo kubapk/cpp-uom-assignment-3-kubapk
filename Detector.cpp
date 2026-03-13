@@ -7,7 +7,6 @@ This implementation file defines member function for the "Detector" class.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Mon 9 Mar 2026
-Last updated on XXX XX Mar 2026
 */
 
 #include<iostream>
@@ -41,10 +40,9 @@ long long Detector::detect_counts(const Source& source_input) const
 
     if(mean_counts > std::numeric_limits<long long>::max())
     {
-        throw std::invalid_argument("Detector cannot generate counts as value is too large to be stored. Ensure detector and source properties"
-        " are physically reasonable.");
+        throw std::invalid_argument("Detector cannot generate counts as value is too large to be stored."
+        "Ensure detector and source properties are physically reasonable.");
     }
-
 
     std::normal_distribution<double> dist(mean_counts, std::sqrt(mean_counts)); 
     //creates Poisson distribution with expected value = mean_counts and generates integer results
@@ -83,7 +81,7 @@ void Detector::load_valid_detectors(const string& detector_file_name)
 
     string line; //string to read in one line from the data file
 
-    while (getline(read_file, line)) //While getline(source, destination) is true, i.e. there is a line to be read
+    while(std::getline(read_file, line)) //While getline(source, destination) is true, i.e. there is a line to be read
     {
         //Ignore blank lines or header lines
         if(line.empty() || line[0] == '#') {continue;}
@@ -93,7 +91,7 @@ void Detector::load_valid_detectors(const string& detector_file_name)
         string detector_efficiency_str; //string to use in string stream
 
         //Try to read detector type & efficiency with semicolon separation
-        if(!getline(ss, detector_type, ';') || !getline(ss, detector_efficiency_str))
+        if(!std::getline(ss, detector_type, ';') || !std::getline(ss, detector_efficiency_str))
         {
             std::cerr<<"Detector validation file error: The line {"<<line<<"} is incorrectly formatted."
             " Line will not contribute to valid detectors."<<std::endl;
@@ -110,14 +108,14 @@ void Detector::load_valid_detectors(const string& detector_file_name)
 
         //Ignore lines with extra characters after detector_efficiency
         string extra;
-        double detector_efficiency{std::stod(detector_efficiency_str)}; //converts efficiency to double
+        double detector_efficiency; //converts efficiency to double
 
         std::stringstream efficiency_stream(detector_efficiency_str); //create new stream to check after efficiency
         if(!(efficiency_stream >> detector_efficiency) || (efficiency_stream >> extra))
         //returns true if it cannot extract double from detector_efficiency, or if it can extract more characters after 
         //reading efficiency
         {
-            std::cerr<<"Detector validation file error: Extra characters found in line {"<<line<<"}."
+            std::cerr<<"Detector validation file error: Invalid characters found in line {"<<line<<"}."
             " Line will not contribute to valid detectors."<<std::endl;
             continue;
         }
@@ -131,8 +129,7 @@ void Detector::load_valid_detectors(const string& detector_file_name)
             throw std::invalid_argument("Efficiency in line {"+line+"} of detector validation file is invalid. Efficiency must be"
             " greater than 0 and at most 1."); //does not allow program to continue
         }
-
-        read_file.close();
     }
 
+    read_file.close();
 }
