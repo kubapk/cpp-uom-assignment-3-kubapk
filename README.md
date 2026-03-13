@@ -3,7 +3,7 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source. The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in the validation files, `valid_sources.txt` and `valid_detectors.txt` which contain the source type and activity, and detector type and efficiency.
+> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source. The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
 >
 > The classes defined in this program are:
 > - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
@@ -11,7 +11,7 @@
 > - **Date**: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
 >
 > ### Program limitations
-> Users are advised, due to memory constraints, the detector measurement time cannot be greater than 1 hour in this program.
+> Note that the detector measurement time cannot be greater than 1 hour in this program due to constraints in storing integers. Also, the efficiency property of the detector (between 0 and 1)
 
 
 ## User Guidelines
@@ -22,7 +22,23 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 This guidelines are intended for a user who wishes to the classes in this project (e.g. to build their own main function).
 
 #### Keeping defined sources & detectors (working in main file)
-When creating your own sources or detectors, they must be ones which exist in the valid_sources or valid_detector files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object.
+When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector.
+
+Source properties:
+ | Property      | Limitations |
+| ----------- | ----------- |
+| Type      | N/A       |
+| Date of acquisition   | Date in the format DD/MM/YYYY  |
+| Activity (Bq/kg) | N/A |
+| Idenifier | Integer unique to a source |
+
+Detector properties:
+ | Property      | Limitations |
+| ----------- | ----------- |
+| Type      | N/A       |
+| Status (on or off)   | true (on) or false (off)  |
+| Efficiency | Float greater than 0 and at most 1 |
+| Measurement time (seconds) | Float of measurement time, max 3600 seconds (1 hour) |
 
 #### Modifying defined sources & detectors
 If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be tab-separated. If this format is not followed, the line will be skipped and so will not be interpretted as a valid source or detector.
