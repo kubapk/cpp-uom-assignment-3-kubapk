@@ -21,7 +21,7 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 The guidelines in this section are intended for a user who wishes to create their own main file using the classes defined in this program.
 
 #### Keeping defined sources & detectors (working in main file)
-When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. Note that the source and detector types are case sensitive so must match exactly with the way they are written in the validation files. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector. 
+When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. Note that the source and detector types are case sensitive so must match exactly with the way they are written in the validation files. The ID is something you can choose to keep track of your sources, and you can specify it when initiating a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector. 
 
 Source properties:
  | Property      | Limitations |
@@ -91,21 +91,16 @@ The following sources were used in the research for this assignment.
 
 [8] https://uwm.edu/safety-health/wp-content/uploads/sites/405/2016/11/BLBK.pdf
 
+[9] https://en.cppreference.com/w/c/chrono/time_t
+
 ## TO DO
-- Print out map (key--value) if user asks for get_valid_sources()
-- Find way to allow two different variable types to depend on each other without calling them in the same setter
+- Print out map (key--value) if user asks for get_valid_sources() --> or remove function
 - Move all setter code to the Source.cpp & Detector.cpp files if its too long
-- Add more sources & detectors to file
-- Check detectors efficiencies are accurate
-- Check date is a past date (do not allow dates greater than today)
 - Find source for detect_counts formula
-- Use long long for counts and then increae time limit? safer in any case - may be some cases you haven't checked
-- File read in validation checks, see assignment-2 also for closing files etc
-- Ensure all functions defined in the class are functional
-- Find literature / source for detectors & their efficiency
-- Cannot allow the mean number of counts to be greater than what long long can store
+- Ensure all functions defined in the class are functional - or remove them
 - Detector file allows for negative value, and does not check if it matches with user inputted
-- Catch extra characters at the end of a line when reading file
 - Do not allow for duplicate detectors?
 - What if whitespace is put infront of source activity in file?
 - Not capital senstive?
+- Dates need to be defined inside Source.cpp?
+- Sometimes file error lets you continue & sometimes stops the program - consistency?

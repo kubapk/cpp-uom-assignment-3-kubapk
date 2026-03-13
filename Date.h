@@ -3,17 +3,20 @@ ____________________________________________
 DATE CLASS
 (Part of PHYS30762 Assignment 3)
 ____________________________________________
-This header file defines a class to check that a date object produces a valid
-date.
+This header file defines a class with attributes day, month, year
+so that objects can define a date DD/MM/YYYY in one go.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Mon 9 Mar 2026
-Last updated on XXX XX Mar 2026
 */
 
 //Include gaurd
 #ifndef DATE_H
 #define DATE_H
+
+#include<iostream>
+#include<ctime>
+#include<chrono>
 
 class Date
 {
@@ -49,7 +52,8 @@ public:
     int get_year() const {return year;}
 
     //Prototyping member functions
-    bool is_valid_past_date() const;
+    bool is_valid_date() const;
+    bool is_past_date() const;
 
 };
 

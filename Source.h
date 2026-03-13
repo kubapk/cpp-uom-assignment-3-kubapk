@@ -78,9 +78,13 @@ public:
 
     void set_date(const Date date_in)
     {
-        if(!date_in.is_valid_past_date())
+        if(!date_in.is_valid_date())
         {
             throw std::invalid_argument("Date is not valid for "+type+" source. Ensure format is DD/MM/YYYY.");
+        }
+        if(!date_in.is_past_date())
+        {
+            throw std::invalid_argument("Date for "+type+" source is in the future. Ensure acquisition date is not in the future.");
         }
 
         date_acquisition = date_in;
