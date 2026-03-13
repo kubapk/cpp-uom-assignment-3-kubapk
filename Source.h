@@ -52,72 +52,10 @@ public:
     ~Source() = default;
 
     //Setters
-    void set_type_activity(const string type_in, const double activity_in)
-    {
-        auto iterator = valid_sources.find(type_in); //pointer to element in map
-
-        if(iterator == valid_sources.end()) //if type_in does not exist in source validation file
-        //i.e. if the iterator reaches the end it has not found type_in in the map
-        {
-            throw std::invalid_argument(type_in+" is not a valid source type (from source validation file).");
-        }
-
-        double expected = iterator->second; //activity value in source validation file corrresponding to type_in
-        double relative_error = std::abs(activity_in - expected) / expected;
-
-        if(relative_error > 0.05) //if activity does not match source type in source validation file up to 5% tolerance
-        {
-            throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg does not match source type "+type_in+
-            ", as specified in source validation file.");
-        }
-
-        type = type_in;
-        activity = activity_in;
-
-    }
-
-    void set_date(const Date date_in)
-    {
-        if(!date_in.is_valid_date())
-        {
-            throw std::invalid_argument("Date is not valid for "+type+" source. Ensure format is DD/MM/YYYY.");
-        }
-        if(!date_in.is_past_date())
-        {
-            throw std::invalid_argument("Date for "+type+" source is in the future. Ensure acquisition date is not in the future.");
-        }
-
-        date_acquisition = date_in;
-    }
-
-    void set_identifier(const int identifier_in)
-    {
-        if(identifier_in < 0)
-        {
-            throw std::invalid_argument("Source ID must be a positive number.");
-        }
-        if(used_ids.count(identifier_in) !=0) //count returns 0 if idenifier_in appears 0 times in used_ids
-        {
-            throw std::invalid_argument("The source ID "+std::to_string(identifier_in)+" has been used more than once.");
-        }
-
-        identifier = identifier_in;
-        used_ids.insert(identifier_in);
-    }
-
-    void set_mass(const double mass_in)
-    {
-        if(mass_in == 0)
-        {
-            throw std::invalid_argument(type+" source mass cannot be 0kg.");
-        }
-        if(mass_in < 0 || mass_in > 1e-6) //if mass is less than/equal to 0 or greater than 1mg
-        {
-            throw std::invalid_argument("The mass "+std::to_string(mass_in)+"kg for "+type+" source is invalid." 
-            " Mass must be between 0 and 1mg (1e-6 kg).");
-        }
-        mass = mass_in;
-    }
+    void set_type_activity(const string type_in, const double activity_in);
+    void set_date(const Date date_in);
+    void set_identifier(const int identifier_in);
+    void set_mass(const double mass_in);
 
     //Getters
     string get_type() const {return type;}

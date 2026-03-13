@@ -68,9 +68,23 @@ An improvement to this program could be to allow for a range of detector efficie
 
  ### File validation
  - Having `file.close()` inside of the read_line while loop caused only the first line to be read, and so file closing needed to be moved outside of the while loop.
+ - Having so many validation checks in the class header file meant it was a very long file, and so I only prototyped the setters (as if they were member functions) in the header file, and defined them in the implementation files (`Source.cpp` and `Detector.cpp`)
 
 ## Disclosure of Delegation to Generative AI
-TBC
+The author (Kuba Kane) declares the use of generative AI in the research and coding process. The following tasks were delegated to GAI tools under full human supervision:
+
+- Idea generation
+- Literature search and systematization
+- Code generation
+- Code optimization
+
+The GAI tool used for these tasks was: ChatGPT-5.2.
+
+The author declares that the work does not contain any AI-generated code. GAI was used as a source of information for explaining code only, and as an inspiration to write original code.
+
+Responsibility for the final manuscript lies entirely with the author.
+
+GAI tools are not listed as authors and do not bear responsibility for the final outcomes.
 
 ## References
 The following sources were used in the research for this assignment.

@@ -14,9 +14,86 @@ Created on Mon 9 Mar 2026
 #include<sstream> //string stream
 #include<string>
 #include "Source.h"
+#include "Date.h"
 using std::string;
 
 
+//SETTERS
+//Setter for type and activity
+void Source::set_type_activity(const string type_in, const double activity_in)
+{
+    auto iterator = valid_sources.find(type_in); //pointer to element in map
+
+    if(iterator == valid_sources.end()) //if type_in does not exist in source validation file
+    //i.e. if the iterator reaches the end it has not found type_in in the map
+    {
+        throw std::invalid_argument(type_in+" is not a valid source type (from source validation file).");
+    }
+
+    double expected = iterator->second; //activity value in source validation file corrresponding to type_in
+    double relative_error = std::abs(activity_in - expected) / expected;
+
+    if(relative_error > 0.05) //if activity does not match source type in source validation file up to 5% tolerance
+    {
+        throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg does not match source type "+type_in+
+        ", as specified in source validation file.");
+    }
+
+    type = type_in;
+    activity = activity_in;
+}
+
+
+//Setter for date
+void Source::set_date(const Date date_in)
+{
+    if(!date_in.is_valid_date())
+    {
+        throw std::invalid_argument("Date is not valid for "+type+" source. Ensure format is DD/MM/YYYY.");
+    }
+    if(!date_in.is_past_date())
+    {
+        throw std::invalid_argument("Date for "+type+" source is in the future. Ensure acquisition date is not in the future.");
+    }
+
+    date_acquisition = date_in;
+}
+
+
+//Setter for identifier
+void Source::set_identifier(const int identifier_in)
+{
+    if(identifier_in < 0)
+    {
+        throw std::invalid_argument("Source ID must be a positive number.");
+    }
+    if(used_ids.count(identifier_in) !=0) //count returns 0 if idenifier_in appears 0 times in used_ids
+    {
+        throw std::invalid_argument("The source ID "+std::to_string(identifier_in)+" has been used more than once.");
+    }
+
+    identifier = identifier_in;
+    used_ids.insert(identifier_in);
+}
+
+
+//Setter for mass
+void Source::set_mass(const double mass_in)
+{
+    if(mass_in == 0)
+    {
+        throw std::invalid_argument(type+" source mass cannot be 0kg.");
+    }
+    if(mass_in < 0 || mass_in > 1e-6) //if mass is less than/equal to 0 or greater than 1mg
+    {
+        throw std::invalid_argument("The mass "+std::to_string(mass_in)+"kg for "+type+" source is invalid." 
+        " Mass must be between 0 and 1mg (1e-6 kg).");
+    }
+    mass = mass_in;
+}
+
+
+//MEMBER FUNCTIONS
 //Member function to print source data
 void Source::print_source_data() const
 {
@@ -25,13 +102,14 @@ void Source::print_source_data() const
     return;
 }
 
-std::set<int> Source::used_ids; //empty set of used IDs created
+
+//Create empty set of used IDs and valid sources
+std::set<int> Source::used_ids;
 //otherwise used_ids is initialised in class but not declared outside of it
-//and so cannot be used for checking IDs
-
 std::map<string, double> Source::valid_sources;
-//empty map called "valid_sources" is created
 
+
+//Member function to load valid sources into map
 void Source::load_valid_sources(const string& source_file_name)
 {
     std::ifstream read_file(source_file_name);

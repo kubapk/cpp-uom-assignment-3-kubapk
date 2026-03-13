@@ -20,6 +20,52 @@ Created on Mon 9 Mar 2026
 using std::string;
 
 
+//SETTERS
+//Setter for type and efficiency
+void Detector::set_type_efficiency(const string type_in, const double efficiency_in)
+{
+    auto iterator = valid_detectors.find(type_in); //pointer to inputted element in map
+
+    if(iterator == valid_detectors.end()) //if type_in does not exist in detector validation file
+    //i.e. if the iterator reaches the end it has not found type_in in the map
+    {
+        throw std::invalid_argument(type_in+" is not a valid detector type (from detector validation file).");
+    }
+
+    //Check efficiency matches detector efficiency
+    double expected = iterator->second; //returns efficiency value in detector validation file corrresponding 
+    //to type_in
+    double relative_error = std::abs(efficiency_in - expected) / expected; //finds percentage difference in
+    //inputted efficiency and corresponding efficiency in the file
+    if(relative_error > 0.05) //if efficiency_in does not match detector type in detector validation file up to 5% tolerance
+    {
+        throw std::invalid_argument("Efficiency "+std::to_string(efficiency_in)+" does not match the efficiency for the "+type_in+
+        " detector, as specified in detector validation file.");
+    }
+
+    type = type_in;
+    efficiency = efficiency_in;
+}
+
+
+//Setter for measurement time
+void Detector::set_measurement_time(const double measurement_time_in)
+{
+    if(!status) //works as long as status is set before measurement_time
+    {
+        throw std::invalid_argument("Cannot set measurement time for "+type+" detector whose status if OFF.");
+    }
+
+    if(measurement_time_in < 1 || measurement_time_in > 3600)
+    {
+        throw std::invalid_argument("Measurement time for "+type+" detector is invalid. Must be between 1 and 3600 seconds (1 hour).");
+    }
+
+    measurement_time = measurement_time_in;
+}
+
+
+//MEMBER FUNCTIONS
 //Member function to produce random detector counts
 long long Detector::detect_counts(const Source& source_input) const
 {
@@ -27,7 +73,7 @@ long long Detector::detect_counts(const Source& source_input) const
 
     //If detector is on:
     static std::random_device rdm; //generates varying (random) seed "rdm" for random number
-    static std::mt19937 gen(rdm()); //Mersenne Twister random number generator created random number "gen" 
+    static std::mt19937 gen(rdm()); //Mersenne Twister random number generator creates random number "gen" 
     //using the seed "rdm"
     //static ensures that if the function is called again, it generates a new seed following the sequence
     //of rdm, instead of using the first seed each time the function is called
@@ -56,7 +102,7 @@ long long Detector::detect_counts(const Source& source_input) const
 //Member function to print out detector data
 void Detector::print_detector_data() const
 {
-    std::cout<<"Detector: [type, status, efficiency, measurement time (s)] = "
+    std::cout<<"Detector: [type, status (0=off, 1=on), efficiency, measurement time (s)] = "
     "["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
 
     return;
