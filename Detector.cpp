@@ -14,8 +14,11 @@ Last updated on XXX XX Mar 2026
 #include<random> //to generate random numbers
 #include<fstream> //for files
 #include<limits> //to check for maximum variable memory in compiler
+#include<string>
+#include<sstream> //string stream for reading in lines
 #include "Source.h"
 #include "Detector.h"
+using std::string;
 
 
 //Member function to produce random detector counts
@@ -55,7 +58,7 @@ long long Detector::detect_counts(const Source& source_input) const
 //Member function to print out detector data
 void Detector::print_detector_data() const
 {
-    std::cout<<"Detector: [type, status, efficiency, measurement time (s), ] = "
+    std::cout<<"Detector: [type, status, efficiency, measurement time (s)] = "
     "["<<type<<", "<<status<<", "<<efficiency<<", "<<measurement_time<<"]"<<std::endl;
 
     return;
@@ -69,16 +72,53 @@ std::map<string, double> Detector::valid_detectors;
 //Member function to load in valid detectors from file
 void Detector::load_valid_detectors(const string& detector_file_name)
 {
+    //Read in detector validation file
     std::ifstream read_file(detector_file_name);
 
-    string detector_type;
-    double detector_efficiency;
-
-    while(read_file >> detector_type >> detector_efficiency)
-    //read_file is sent to detector type (the first thing it reads)
-    //2nd thing read_file reads is then sent to detector_efficiency
+    //Check if file opened correctly
+    if(!read_file.good())
     {
-        valid_detectors[detector_type] = detector_efficiency;
-        //sets detector_type to be key and detector_efficiency to be value
+        throw std::runtime_error("Detector validation file '"+detector_file_name+"' could not be opened.");
     }
+
+    string line; //string to read in one line from the data file
+
+    while (getline(read_file, line)) //While getline(source, destination) is true, i.e. there is a line to be read
+    {
+        std::stringstream ss(line); //create string stream called ss and initialise it with "line", i.e. first line in file
+
+        string detector_type;
+        string detector_efficiency_str; //later converted to int
+        string extra;
+
+        //Try to read detector type & efficiency with semicolon separation
+        //getline(input stream, string to put date int, delimiter character)
+        if(!getline(ss, detector_type, ';') || !getline(ss, detector_efficiency_str))
+        {
+            std::cout << "TYPE: {" << detector_type << "} "
+            << "EFF: {" << detector_efficiency_str << "}\n";
+
+            std::cerr<<"  The line {"<<line<<"} in detector validation file is incorrectly formatted."<<std::endl;
+            continue; //skip rest of current iteration and move to the next one (ignore line)
+        }
+
+        double detector_efficiency{std::stod(detector_efficiency_str)}; //convert efficiency into double
+        valid_detectors[detector_type] = detector_efficiency;
+
+        //Check no extra characters in file
+        if(!(ss >> detector_efficiency) || (ss >> extra))
+        {
+            std::cerr << "Invalid efficiency in line {" << line << "}.\n";
+            continue;
+        }
+
+
+        //Check efficiency range is valid
+        if(detector_efficiency < 0 || detector_efficiency > 1) //disallows efficiency not in [0, 1]
+        {
+            throw std::invalid_argument("Efficiency in line {"+line+"} of detector validation file is not between 0 and 1. Efficiency must be"
+            "between 0 and 1 inclusive."); //does not allow program to continue
+        }
+    }
+
 }

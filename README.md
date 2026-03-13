@@ -6,29 +6,33 @@
 > This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties. Sources can be passed into detectors using the `detect_counts` function from the class, which gives a random source count generated from a normal distribution of the properties of the source.
 >
 > The classes defined in this program are:
-> - `Source`: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
-> - `Detector`: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
-> - `Date`: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
+> - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), and a unique identifier.
+> - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
+> - **Date**: Allows objects contain a day, month and year printed in the format DD/MM/YYYY.
 >
 > ### Program limitations
 > Users are advised, due to memory constraints, the detector measurement time cannot be greater than 1 hour in this program.
 
 
 ## User Guidelines
-### Compilation Guidelines
+### Running the program as-is
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 assignment-3.cpp Source.cpp Detector.cpp Date.cpp -o main.exe`. The program can then be run by calling the file `main.exe`.
 
-### Class Guidelines
-This guidelines are intended for a user who wishes to build their own code using the classes in this project.
-Note that date format should follow the British format, DD/MM/YYYY.
-When creating your own sources or detectors, they must be ones which exist in the valid_sources or valid_detector files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources. If you wish to enable more types of sources or detectors, you must modify the valid_sources or valid_detectors files with additional rows specifying all of the relevant properties.
+### Modifying the program
+This guidelines are intended for a user who wishes to the classes in this project (e.g. to build their own main function).
+
+#### Keeping defined sources & detectors (working in main file)
+When creating your own sources or detectors, they must be ones which exist in the valid_sources or valid_detector files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object.
+
+#### Modifying defined sources & detectors
+If you wish to enable more types of sources or detectors, you must modify the sources and/or detector validation files with additional rows specifying all of the relevant properties. You can also use your own files, and modify `Source::load_valid_sources(<file_name>)` with your file name. In the source validation file you can specify the source name as well as its specific activity (Bq/kg), and in the detector validation file you can specify the detector name and its efficiency. Note that in both validation files the values must be tab-separated. If this format is not followed, the line will be skipped and so will not be interpretted as a valid source or detector.
 
 ## Program Reasoning
 ### Data validation
- - Originally tried to use "if-else" statements in the `Source` class to print out an error message if the data inputted was invalid. However, the code continued to print out the source object properties, leaving the invalid property blank.
+ - Originally tried to use "if-else" statements in the **Source** class to print out an error message if the data inputted was invalid. However, the code continued to print out the source object properties, leaving the invalid property blank.
  - Tried to overcome this using `stdexcept` library, which enabled arguments to be raised, which could then be printed out using `.what()` in the main code. This enabled direct print outs to be avoided in the class scripts, but still meant the code continued to be printed out.
  - This was finally overcome by putting the code under `try`, and printing out the error message defined in the class using `catch`. This meant code did not continue to execute if an error was picked up.
- - In order to validate the date input, a separate class was ceated so that the `Source` class did not become overwhelmed with validation checks, and so that it was easier to extract out the day, month and year to perform the checks. It also prevents ambiguity in formatting the date (e.g. British vs American date format, or whether year contains 2 or 4 digits).
+ - In order to validate the date input, a separate class was ceated so that the **Source** class did not become overwhelmed with validation checks, and so that it was easier to extract out the day, month and year to perform the checks. It also prevents ambiguity in formatting the date (e.g. British vs American date format, or whether year contains 2 or 4 digits).
  - A lot of errors in code came about because of using private data members when performing validation chedcks inside setters, which are set to 0 until the setter function is completed, instead of the inputted values when an object is declared in the main code (`assignment-3.cpp`).
 
  ### Unique source identifiers
@@ -77,3 +81,5 @@ The following sources were used in the research for this assignment.
 - Ensure all functions defined in the class are functional
 - Find literature / source for detectors & their efficiency
 - Cannot allow the mean number of counts to be greater than what long long can store
+- Detector file allows for negative value, and does not check if it matches with user inputted
+- Catch extra characters at the end of a line when reading file

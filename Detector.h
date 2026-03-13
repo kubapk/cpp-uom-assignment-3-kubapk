@@ -65,13 +65,13 @@ public:
         if(efficiency_in < 0 || efficiency_in > 1) //disallows efficiency not in [0, 1], even if in detector 
         //validation file
         {
-            throw std::invalid_argument("Efficiency for detector "+type_in+" is not between 0 and 1. Efficiency must be"
+            throw std::invalid_argument("Efficiency for "+type_in+" detector is not between 0 and 1. Efficiency must be"
             "between 0 and 1 inclusive.");
         }
         if(relative_error > 0.05) //if efficiency_in does not match detector type in detector validation file up to 5% tolerance
         {
-            throw std::invalid_argument("Efficiency "+std::to_string(efficiency_in)+" does not match detector type "+type_in+
-            ", as specified in detector validation file.");
+            throw std::invalid_argument("Efficiency "+std::to_string(efficiency_in)+" does not match the efficiency for the "+type_in+
+            " detector, as specified in detector validation file.");
         }
 
         type = type_in;
