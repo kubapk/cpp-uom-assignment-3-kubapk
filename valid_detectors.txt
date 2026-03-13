@@ -1,3 +1,6 @@
-Scintillator;0.1
+Scintillator;0.2
 Geiger;0.1
-Germanium;0.1
+Germanium;0.05
+Plastic Scintillator;0.3
+Silicon;0.6
+Ionisation Chamber;0.15

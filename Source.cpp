@@ -68,11 +68,10 @@ void Source::load_valid_sources(const string& source_file_name)
             continue; 
         }
 
-        //Try to convert activity to a double
 
         //Ignore extra characters after source_activity
         string extra;
-        double source_activity{std::stod(source_activity_str)}; //converts activity to double
+        double source_activity; //converts activity to double
         std::stringstream activity_stream(source_activity_str); //create new stream to check after activity
         if(!(activity_stream >> source_activity) || (activity_stream >> extra))
         //returns true if it cannot extract double from source_activity, or if it can extract more characters after 
@@ -85,6 +84,13 @@ void Source::load_valid_sources(const string& source_file_name)
 
         //Add file line to map (type is key and activity is value)
         valid_sources[source_type] = source_activity;
+
+        //Check activity range is valid
+        if(source_activity <= 0 ) //disallows non-positive activity
+        {
+            throw std::invalid_argument("Activity in line {"+line+"} of source validation file is invalid. Activity must be"
+            " greater than 0."); //does not allow program to continue
+        }
     }
 
     read_file.close();

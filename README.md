@@ -3,14 +3,14 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program allows you to define radioactive sources with certain properties (and unique identifiers), as well as a detector with certain properties.
+> This program allows you to define radioactive sources and detectors with certain properties. The sources are also given a unique identifier.
 >
-> The following classes are defined in this program to give such properties:
-> - **Source**: Gives the radioactive source a type, date of acquistion, activity (Bq/kg), mass (kg), and a unique identifier.
+> The following classes are defined in this program to handle these properties:
+> - **Source**: Gives the radioactive source a type, date of acquistion, specific activity (Bq/kg), mass (kg), and a unique identifier.
 > - **Detector**: Gives the source detector a type, status (on or off), efficiency (in detecting a source), and a time (for which it measures).
 > - **Date**: An object of this class has a day, month, and year.
 >
-> Sources can be passed into detectors using the `detect_counts` function from the **Detector** class, which gives a random source count generated from a normal distribution of the mean counts (found by mutliplying a source's activity with its mass as well as the detector's efficiency and measurement time). The detector's status must be ON and measurement time greater than 0 in order to produce counts. The source and detectors must exist in `valid_sources.txt` (source validation file) and `valid_detectors.txt` (detector validation file) which contain the source type and activity, and detector type and efficiency respectively.
+> Sources can be passed into detectors using the `detect_counts` function from the **Detector** class, which returns how many paticles from the emitted source the detector counts. It is a random number generated from a normal distribution of the mean counts (found by mutliplying a source's specific activity with its mass as well as the detector's efficiency and measurement time). The detector's status must be ON and measurement time greater than 0 in order to produce counts. The sources specified must exist in `valid_sources.txt` (source validation file) which contains the source type and specific activity. The detectors specified must exist in `valid_detectors.txt` (detector validation file) which contains the detector type and efficiency.
 
 
 ## User Guidelines
@@ -21,14 +21,14 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 The guidelines in this section are intended for a user who wishes to create their own main file using the classes defined in this program.
 
 #### Keeping defined sources & detectors (working in main file)
-When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector.
+When creating your own sources or detectors, they must be ones which exist in the `valid_sources.txt` or `valid_detectors.txt` files. If the data you enter does not match the data in those files, you will get an error message. Note that the source and detector types are case sensitive so must match exactly with the way they are written in the validation files. The ID is something you can choose to keep track of your sources, and you can specify it when initaiting a **Source** object. The source identifier must be unique. See below for the allowed values for the source and detector. 
 
 Source properties:
  | Property      | Limitations |
 | ----------- | ----------- |
 | Type      | String, spaces permitted       |
 | Date of acquisition   | Date in the format `date(DD, MM, YYYY)` |
-| Activity (Bq/kg) | N/A |
+| Activity (Bq/kg) | Float greater than 0 |
 | Mass (kg) | Float greater than 0kg and at most 1mg (1e-6kg) |
 | Idenifier | Integer unique to a source |
 
@@ -47,7 +47,9 @@ If you wish to enable more types of sources or detectors, you must modify the so
 ## Program Limitations
 While in reality the efficiency of a detector is not an intrinsic property and depends on the source and its energy, this program assumes that the efficiency is a set property of a given detector. In order to produce more realistic count values from a detector, the mean counts is mutliplied by a geometric factor which takes into account the fact that only a small part of the spherical span of particles emitted from the source are exposed to the detector's surface.
 
-In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large that it goes beyond the maximum memory allocated to an integer in C++.
+In reality a detector may be able to be left for several hours, but here the detector measurement time is limited to 1 hour so that the run time of the program when calculating the normal distribution from the mean counts is not so large. This also ensures that the mean counts value doesn't go beyond the maximum memory allocated to an integer (specifically, of type long long) in C++.
+
+An improvement to this program could be to allow for a range of detector efficiencies.
 
 
 ## Program Reasoning
@@ -90,13 +92,9 @@ The following sources were used in the research for this assignment.
 [8] https://uwm.edu/safety-health/wp-content/uploads/sites/405/2016/11/BLBK.pdf
 
 ## TO DO
-- Change files to be read as tab separated, allowing for multiple words for source type or detector type
 - Print out map (key--value) if user asks for get_valid_sources()
-- Validate detectors based on file
 - Find way to allow two different variable types to depend on each other without calling them in the same setter
 - Move all setter code to the Source.cpp & Detector.cpp files if its too long
-- User should not be able to set measurement time if they have set the detector status to be off
-- Introduce reasonable upper limit for detector time
 - Add more sources & detectors to file
 - Check detectors efficiencies are accurate
 - Check date is a past date (do not allow dates greater than today)
@@ -110,3 +108,4 @@ The following sources were used in the research for this assignment.
 - Catch extra characters at the end of a line when reading file
 - Do not allow for duplicate detectors?
 - What if whitespace is put infront of source activity in file?
+- Not capital senstive?

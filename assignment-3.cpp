@@ -6,7 +6,6 @@ This C++ script...
 
 Created by Kuba Kane (ID: 11019699)
 Created on Mon 9 Mar 2026
-Last updated on XXX XX Mar 2026
 */
 
 #include<iostream>
@@ -36,7 +35,7 @@ int main()
         sources.push_back(Source("Co-92", date3, 4.2e16, 10004, 1e-9));
 
         //Define detector
-        Detector d1("Scintillator", true, 0.1, 10);
+        Detector d1("Ionisation Chamber", true, 0.15, 10);
         std::cout<<"NEW DETECTOR CREATED"<<std::endl;
         d1.print_detector_data();
         std::cout<<"\nSOURCE DATA"<<std::endl;

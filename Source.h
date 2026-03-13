@@ -7,7 +7,6 @@ This header file defines a class for a radioactive source.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Mon 9 Mar 2026
-Last updated on XXX XX Mar 2026
 */
 
 //Include gaurd
@@ -66,10 +65,6 @@ public:
         double expected = iterator->second; //activity value in source validation file corrresponding to type_in
         double relative_error = std::abs(activity_in - expected) / expected;
 
-        if(activity_in < 0) //disallows negative values even if present in source validation file.
-        {
-            throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg must be a positive number.");
-        }
         if(relative_error > 0.05) //if activity does not match source type in source validation file up to 5% tolerance
         {
             throw std::invalid_argument("Activity "+std::to_string(activity_in)+"Bq/kg does not match source type "+type_in+
@@ -97,7 +92,7 @@ public:
         {
             throw std::invalid_argument("Source ID must be a positive number.");
         }
-        if(used_ids.count(identifier_in) !=0) //returns 0 if idenifier_in appears 0 times in used_ids
+        if(used_ids.count(identifier_in) !=0) //count returns 0 if idenifier_in appears 0 times in used_ids
         {
             throw std::invalid_argument("The source ID "+std::to_string(identifier_in)+" has been used more than once.");
         }
