@@ -72,6 +72,9 @@ An improvement to this program could be to allow for a range of detector efficie
  - Having `file.close()` inside of the read_line while loop caused only the first line to be read, and so file closing needed to be moved outside of the while loop.
  - Having so many validation checks in the class header file meant it was a very long file, and so I only prototyped the setters (as if they were member functions) in the header file, and defined them in the implementation files (`Source.cpp` and `Detector.cpp`)
 
+ ### Classes
+ - Removed getters for `static std::set<int> used_ids` and ` static std::map<string, double> valid_sources` in Source class, as it is not necessary for the user to output or use these. 
+
 ## Disclosure of Delegation to Generative AI
 The author (Kuba Kane) declares the use of generative AI in the research and coding process. The following tasks were delegated to GAI tools under full human supervision:
 
