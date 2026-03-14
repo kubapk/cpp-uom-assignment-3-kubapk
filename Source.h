@@ -63,8 +63,6 @@ public:
     double get_activity() const {return activity;}
     int get_identifier() const {return identifier;}
     double get_mass() const {return mass;}
-    static std::set<int> get_used_ids() {return used_ids;}
-    static std::map<string, double> get_valid_sources() {return valid_sources;}
 
     //Prototyping member functions
     void print_source_data() const;

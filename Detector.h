@@ -59,7 +59,6 @@ public:
     //Prototyping member functions
     long long detect_counts(const Source& source_in) const; //type allows for larger number of counts
     void print_detector_data() const;
-    static void load_valid_detectors(const string& detector_file_name);
 };
 
 #endif //if detector_h is already defined, everything between #ifndef and #endif is skipped
