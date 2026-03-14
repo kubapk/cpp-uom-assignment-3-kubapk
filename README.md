@@ -64,7 +64,7 @@ An improvement to this program could be to allow for a range of detector efficie
  - To ensure unique identifiers, the `set` library was used to store all identifiers created by the user in a vector, disallowing any 2 entries to be the same.
  - `static` was also useful here, meaning if the code was re-run, the identifiers would be remembered and so duplicated idenifiers would produce an error.
  - To ensure compilation worked, the set `used_ids` needed to be initialised (with no elements) in the `Source.cpp` file.
- - A lot of errors came about because of using the private data memebers when valudating inputs receieved in setters, instead of the actual input given to the setters.
+ - A lot of errors came about because of using the private data memebers when validating inputs receieved in setters, instead of the actual input given to the setters.
 
  ### File validation
  - These files contain just two fields, their type and the efficiency (for detector) or activity (for source) and so it was convenient to use a map `map<string, double>`, where the type was the key and the other quantity (double) was the value. This then allowed to create a check that, e.g. the activity written in main for the source matches the activity delcared in the file for the same source. This was done using an iterator which stores the index of a source, which is declared first, and finding the corresponding activity using that index. A 5% difference in values was allowed as there were sometimes rounding errors, perhaps due to the way the data is stored or extracted from the file.
